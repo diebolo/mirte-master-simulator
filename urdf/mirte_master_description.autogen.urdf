@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by
+Stephen Brawner (brawner@gmail.com) 
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
-  name="mirtebot_description">
+  name="mirte_master_description">
   <link
     name="base_link">
     <inertial>
@@ -26,7 +27,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/base_link.STL" />
+          filename="package://mirte_master_simulator/meshes/base_link.STL" />
       </geometry>
       <material
         name="">
@@ -40,7 +41,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/base_link.STL" />
+          filename="package://mirte_master_simulator/meshes/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -66,7 +67,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/front_left_wheel_link.STL" />
+          filename="package://mirte_master_simulator/meshes/front_left_wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -80,7 +81,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/front_left_wheel_link.STL" />
+          filename="package://mirte_master_simulator/meshes/front_left_wheel_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -119,7 +120,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/front_right_wheel_link.STL" />
+          filename="package://mirte_master_simulator/meshes/front_right_wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -133,7 +134,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/front_right_wheel_link.STL" />
+          filename="package://mirte_master_simulator/meshes/front_right_wheel_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -172,7 +173,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/rear_right_wheel_link.STL" />
+          filename="package://mirte_master_simulator/meshes/rear_right_wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -186,7 +187,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/rear_right_wheel_link.STL" />
+          filename="package://mirte_master_simulator/meshes/rear_right_wheel_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -225,7 +226,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/rear_left_wheel_link.STL" />
+          filename="package://mirte_master_simulator/meshes/rear_left_wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -239,7 +240,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/rear_left_wheel_link.STL" />
+          filename="package://mirte_master_simulator/meshes/rear_left_wheel_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -278,7 +279,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/camera_link.STL" />
+          filename="package://mirte_master_simulator/meshes/camera_link.STL" />
       </geometry>
       <material
         name="">
@@ -292,7 +293,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/camera_link.STL" />
+          filename="package://mirte_master_simulator/meshes/camera_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -331,7 +332,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/lidar_link.STL" />
+          filename="package://mirte_master_simulator/meshes/lidar_link.STL" />
       </geometry>
       <material
         name="">
@@ -345,7 +346,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/lidar_link.STL" />
+          filename="package://mirte_master_simulator/meshes/lidar_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -384,7 +385,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/fron_left_ultrasone_link.STL" />
+          filename="package://mirte_master_simulator/meshes/fron_left_ultrasone_link.STL" />
       </geometry>
       <material
         name="">
@@ -398,7 +399,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/fron_left_ultrasone_link.STL" />
+          filename="package://mirte_master_simulator/meshes/fron_left_ultrasone_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -437,7 +438,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/fron_right_ultrasone_link.STL" />
+          filename="package://mirte_master_simulator/meshes/fron_right_ultrasone_link.STL" />
       </geometry>
       <material
         name="">
@@ -451,7 +452,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/fron_right_ultrasone_link.STL" />
+          filename="package://mirte_master_simulator/meshes/fron_right_ultrasone_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -490,7 +491,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/rear_left_ultrasone_link.STL" />
+          filename="package://mirte_master_simulator/meshes/rear_left_ultrasone_link.STL" />
       </geometry>
       <material
         name="">
@@ -504,7 +505,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/rear_left_ultrasone_link.STL" />
+          filename="package://mirte_master_simulator/meshes/rear_left_ultrasone_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -543,7 +544,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/rear_right_ultrasone_link.STL" />
+          filename="package://mirte_master_simulator/meshes/rear_right_ultrasone_link.STL" />
       </geometry>
       <material
         name="">
@@ -557,7 +558,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://mirtebot_description/meshes/rear_right_ultrasone_link.STL" />
+          filename="package://mirte_master_simulator/meshes/rear_right_ultrasone_link.STL" />
       </geometry>
     </collision>
   </link>

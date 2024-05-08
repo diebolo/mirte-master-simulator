@@ -1,0 +1,19 @@
+<launch>
+    <arg name="name" default="mirte_master" /> <!-- Use '$(anon mirte_master)' for anonomized names-->
+    <arg name="x" default="0" />
+    <arg name="y" default="0" />
+    <arg name="z" default="1" />
+    <arg name="yaw" default="0" />
+
+    <!-- This might not work since paramaters cannot be remapped so joint_state_publisher causes troubles -->
+    <!-- <arg name="robot_description_parameter" default="robot_description"/> -->
+
+    <include file="$(find mirte_master_simulator)/launch/description.launch">
+        <!-- <arg name="robot_description_parameter" value="$(arg robot_description_parameter)"/> -->
+        <!-- TODO: Make the model flexible (disable enable sensors) -->
+    </include>
+
+    <!-- Spawn Mirte Master -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -model $(arg name) -param $(arg robot_description_parameter) -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)" />
+</launch>
