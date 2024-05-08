@@ -1,11 +1,6 @@
 <launch>
-    <!-- This might not work since paramaters cannot be remapped so joint_state_publisher causes troubles -->
-    <arg name="robot_description_parameter" value="robot_description"/>
-
-    <param name="$(arg robot_description_parameter)"
+    <param name="robot_description"
         command="$(find xacro)/xacro $(find mirte_master_simulator)/urdf/mirte_master_description.urdf.xacro" />
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-        <!-- <param name="robot_description" value=""/> -->
-    <!-- </node> -->
 </launch>
