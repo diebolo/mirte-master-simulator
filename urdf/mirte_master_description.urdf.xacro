@@ -4,9 +4,23 @@ Stephen Brawner (brawner@gmail.com)
      Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
-  name="mirte_master">
+  name="mirte_master" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Bring in simulation data for Gazebo. -->
+  <xacro:include filename="$(find mirte_master_simulator)/urdf/mirte_master_description.gazebo" />
+
+  <!-- Add Pseudo link to fix warning about intertia on startup -->
+  <link name="base_link"></link>
+  <joint name="bl_bb_joint" type="fixed">
+    <parent
+      link="base_link" />
+    <child
+      link="base_body" />
+
+  </joint>
+
   <link
-    name="base_link">
+    name="base_body">
     <inertial>
       <origin
         xyz="-0.00127942588707535 0.0151241102447173 -0.00985810717289011"
@@ -77,26 +91,25 @@ Stephen Brawner (brawner@gmail.com)
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
+        xyz="0.030103 0.034202 0.03996"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mirte_master_simulator/meshes/front_left_wheel_link.STL" />
+        <cylinder radius="0.053" length="0.06"/>
       </geometry>
     </collision>
   </link>
   <joint
     name="front_left_wheel_joint"
-    type="fixed">
+    type="continuous">
     <origin
       xyz="0.16802 -0.050672 -0.07546"
       rpy="1.5708 0.13151 -1.5708" />
-    <parent
-      link="base_link" />
+      <parent
+      link="base_body" />
     <child
       link="front_left_wheel_link" />
     <axis
-      xyz="0 0 0" />
+      xyz="0 0 -1" />
   </joint>
   <link
     name="front_right_wheel_link">
@@ -130,26 +143,25 @@ Stephen Brawner (brawner@gmail.com)
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
+        xyz="0.030103 0.034202 0.03996"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mirte_master_simulator/meshes/front_right_wheel_link.STL" />
+        <cylinder radius="0.053" length="0.06"/>
       </geometry>
     </collision>
   </link>
   <joint
     name="front_right_wheel_joint"
-    type="fixed">
+    type="continuous">
     <origin
       xyz="-0.087976 -0.060085 -0.083647"
       rpy="1.5708 -0.14316 -1.5708" />
     <parent
-      link="base_link" />
+      link="base_body" />
     <child
       link="front_right_wheel_link" />
     <axis
-      xyz="0 0 0" />
+      xyz="0 0 1" />
   </joint>
   <link
     name="rear_right_wheel_link">
@@ -183,26 +195,25 @@ Stephen Brawner (brawner@gmail.com)
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
+        xyz="0.030103 0.034202 0.03996"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mirte_master_simulator/meshes/rear_right_wheel_link.STL" />
+        <cylinder radius="0.053" length="0.06"/>
       </geometry>
     </collision>
   </link>
   <joint
     name="rear_right_wheel_joint"
-    type="fixed">
+    type="continuous">
     <origin
       xyz="-0.087976 0.11997 -0.074702"
       rpy="1.5708 0.15337 -1.5708" />
     <parent
-      link="base_link" />
+      link="base_body" />
     <child
       link="rear_right_wheel_link" />
     <axis
-      xyz="0 0 0" />
+      xyz="0 0 1" />
   </joint>
   <link
     name="rear_left_wheel_link">
@@ -236,26 +247,25 @@ Stephen Brawner (brawner@gmail.com)
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
+        xyz="0.030103 0.034202 0.03996"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mirte_master_simulator/meshes/rear_left_wheel_link.STL" />
+        <cylinder radius="0.053" length="0.06"/>
       </geometry>
     </collision>
   </link>
   <joint
     name="rear_left_wheel_joint"
-    type="fixed">
+    type="continuous">
     <origin
       xyz="0.16802 0.10992 -0.083647"
       rpy="1.5708 -0.14316 -1.5708" />
     <parent
-      link="base_link" />
+      link="base_body" />
     <child
       link="rear_left_wheel_link" />
     <axis
-      xyz="0 0 0" />
+      xyz="0 0 -1" />
   </joint>
   <link
     name="camera_link">
@@ -304,7 +314,7 @@ Stephen Brawner (brawner@gmail.com)
       xyz="0 -0.14666 0.0427"
       rpy="1.5708 0 0" />
     <parent
-      link="base_link" />
+      link="base_body" />
     <child
       link="camera_link" />
     <axis
@@ -357,7 +367,7 @@ Stephen Brawner (brawner@gmail.com)
       xyz="0 -0.1005 -0.023"
       rpy="-1.5708 0 -1.5708" />
     <parent
-      link="base_link" />
+      link="base_body" />
     <child
       link="lidar_link" />
     <axis
@@ -410,7 +420,7 @@ Stephen Brawner (brawner@gmail.com)
       xyz="0.052978 -0.12028 -0.031"
       rpy="3.1416 0 0.29671" />
     <parent
-      link="base_link" />
+      link="base_body" />
     <child
       link="fron_left_ultrasone_link" />
     <axis
@@ -463,7 +473,7 @@ Stephen Brawner (brawner@gmail.com)
       xyz="-0.052978 -0.12028 -0.031"
       rpy="3.1416 0 -0.29671" />
     <parent
-      link="base_link" />
+      link="base_body" />
     <child
       link="fron_right_ultrasone_link" />
     <axis
@@ -516,7 +526,7 @@ Stephen Brawner (brawner@gmail.com)
       xyz="0.056561 0.11919 -0.031"
       rpy="3.1416 0 2.8449" />
     <parent
-      link="base_link" />
+      link="base_body" />
     <child
       link="rear_left_ultrasone_link" />
     <axis
@@ -569,7 +579,7 @@ Stephen Brawner (brawner@gmail.com)
       xyz="-0.0565606470918482 0.119187021096338 -0.031"
       rpy="3.14159265358979 0 -2.84488668075076" />
     <parent
-      link="base_link" />
+      link="base_body" />
     <child
       link="rear_right_ultrasone_link" />
     <axis

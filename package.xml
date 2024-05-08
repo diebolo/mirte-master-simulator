@@ -16,6 +16,9 @@
   <depend>rviz</depend>
   <depend>joint_state_publisher_gui</depend>
   <depend>gazebo</depend>
+  <!-- <exec_depend>mecanum_gazebo_plugin</exec_depend> -->
+  <!-- <depend>gazebo_ros_control</depend> -->
+  <depend>ros_controllers</depend>
   <export>
     <architecture_independent />
   </export>
