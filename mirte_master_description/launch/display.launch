@@ -1,0 +1,18 @@
+<launch>
+  <arg name="flag_enable" default="0"/>
+  <!-- <arg
+    name="model" /> -->
+  <include file="$(find mirte_master_description)/launch/description.launch" >
+    <arg name="flag_enable" value="$(arg flag_enable)"/>
+  </include>
+
+  <node
+    name="joint_state_publisher_gui"
+    pkg="joint_state_publisher_gui"
+    type="joint_state_publisher_gui" />
+  <node
+    name="rviz"
+    pkg="rviz"
+    type="rviz"
+    args="-d $(find mirte_master_description)/urdf.rviz" />
+</launch>

@@ -1,0 +1,1324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by
+Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="mirte_master" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:arg name="flag_enable" default="false" />
+  <!-- <xacro:property name="pi" value="3.1415" /> -->
+  <!-- Bring in simulation data for Gazebo. -->
+  <!-- TODO FIX -->
+  <!-- <xacro:include filename="$(find mirte_master_gazebo)/urdf/mirte_master_description.gazebo" /> -->
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.00024285 0.0082178 -0.0037661"
+        rpy="0 0 0" /> F <mass
+        value="3.0815" />
+      <inertia
+        ixx="0.01245"
+        ixy="-6.0298E-07"
+        ixz="-7.3071E-07"
+        iyy="0.0091262"
+        iyz="-0.00017974"
+        izz="0.020706" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.52941 0.54902 0.54902 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="wheel_fl">
+    <inertial>
+      <origin
+        xyz="-1.1211E-10 2.9249E-10 0.024936"
+        rpy="0 0 0" />
+      <mass
+        value="0.26661" />
+      <inertia
+        ixx="8.0546E-05"
+        ixy="1.9673E-15"
+        ixz="1.226E-14"
+        iyy="8.0546E-05"
+        iyz="9.6889E-15"
+        izz="9.3196E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/wheel_fl.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/wheel_fl.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_joint_fl"
+    type="continuous">
+    <origin
+      xyz="0.153 -0.085 -0.0455"
+      rpy="1.5708 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_fl" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="wheel_br">
+    <inertial>
+      <origin
+        xyz="-1.0009E-10 2.9473E-10 -0.025064"
+        rpy="0 0 0" />
+      <mass
+        value="0.26661" />
+      <inertia
+        ixx="8.0546E-05"
+        ixy="4.8209E-17"
+        ixz="1.2652E-14"
+        iyy="8.0546E-05"
+        iyz="1.7571E-14"
+        izz="9.3196E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/wheel_br.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/wheel_br.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_joint_br"
+    type="continuous">
+    <origin
+      xyz="-0.153 0.085 -0.0455"
+      rpy="1.5708 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_br" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="wheel_fr">
+    <inertial>
+      <origin
+        xyz="-1.9E-10 2.1252E-10 -0.025064"
+        rpy="0 0 0" />
+      <mass
+        value="0.26661" />
+      <inertia
+        ixx="8.0546E-05"
+        ixy="-4.5866E-15"
+        ixz="7.6917E-14"
+        iyy="8.0546E-05"
+        iyz="9.6011E-15"
+        izz="9.3196E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/wheel_fr.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/wheel_fr.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_joint_fr"
+    type="continuous">
+    <origin
+      xyz="-0.153 -0.085 -0.0455"
+      rpy="1.5708 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_fr" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="wheel_bl">
+    <inertial>
+      <origin
+        xyz="-1.9E-10 2.1252E-10 0.024936"
+        rpy="0 0 0" />
+      <mass
+        value="0.26661" />
+      <inertia
+        ixx="8.0546E-05"
+        ixy="-4.5761E-15"
+        ixz="7.6918E-14"
+        iyy="8.0546E-05"
+        iyz="9.5856E-15"
+        izz="9.3196E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/wheel_bl.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/wheel_bl.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_joint_bl"
+    type="continuous">
+    <origin
+      xyz="0.153 0.085 -0.0455"
+      rpy="1.5708 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="wheel_bl" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="cam_front">
+    <inertial>
+      <origin
+        xyz="-0.00010069 -0.00018452 0.0033961"
+        rpy="0 0 0" />
+      <mass
+        value="0.0022023" />
+      <inertia
+        ixx="7.901E-08"
+        ixy="-1.4438E-25"
+        ixz="5.502E-24"
+        iyy="1.049E-07"
+        iyz="-1.0016E-23"
+        izz="1.3983E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/cam_front.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79608 0.82353 0.93725 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/cam_front.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="cam_joint_front"
+    type="fixed">
+    <origin
+      xyz="0 -0.1325 -0.0285"
+      rpy="1.5708 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="cam_front" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ultrasonic_fl">
+    <inertial>
+      <origin
+        xyz="-4.30733527062924E-05 0.00367564883489804 -6.99136578631437E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.00383513951999247" />
+      <inertia
+        ixx="1.59365628586768E-07"
+        ixy="-8.54250314742639E-10"
+        ixz="-3.40905422018191E-09"
+        iyy="7.68751523460336E-07"
+        iyz="2.65062440645508E-09"
+        izz="7.26221149125628E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/ultrasonic_fl.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/ultrasonic_fl.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ultrasonic_joint_fl"
+    type="fixed">
+    <origin
+      xyz="0.05297775289576 -0.120282421780502 -0.031"
+      rpy="3.14159265358979 0 0.296705972839036" />
+    <parent
+      link="base_link" />
+    <child
+      link="ultrasonic_fl" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ultrasonic_fr">
+    <inertial>
+      <origin
+        xyz="-4.30733527063201E-05 0.00367564883489799 -6.99136578631784E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.00383513951999245" />
+      <inertia
+        ixx="1.59365628586767E-07"
+        ixy="-8.54250314742507E-10"
+        ixz="-3.40905422018182E-09"
+        iyy="7.6875152346034E-07"
+        iyz="2.65062440645522E-09"
+        izz="7.26221149125632E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/ultrasonic_fr.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/ultrasonic_fr.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ultrasonic_joint_fr"
+    type="fixed">
+    <origin
+      xyz="-0.05297775289576 -0.120282421780502 -0.031"
+      rpy="3.14159265358979 0 -0.296705972839036" />
+    <parent
+      link="base_link" />
+    <child
+      link="ultrasonic_fr" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ultrasonic_bl">
+    <inertial>
+      <origin
+        xyz="-4.30733527062716E-05 0.00367564883489804 -6.9913657863175E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.00383513951999244" />
+      <inertia
+        ixx="1.59365628586767E-07"
+        ixy="-8.54250314742494E-10"
+        ixz="-3.40905422018206E-09"
+        iyy="7.68751523460339E-07"
+        iyz="2.6506244064553E-09"
+        izz="7.26221149125632E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/ultrasonic_bl.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/ultrasonic_bl.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ultrasonic_joint_bl"
+    type="fixed">
+    <origin
+      xyz="0.0565606470918482 0.119187021096338 -0.031"
+      rpy="3.14159265358979 0 2.84488668075076" />
+    <parent
+      link="base_link" />
+    <child
+      link="ultrasonic_bl" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="ultrasonic_br">
+    <inertial>
+      <origin
+        xyz="-4.30733527062716E-05 0.00367564883489802 -6.99136578631541E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.00383513951999245" />
+      <inertia
+        ixx="1.59365628586768E-07"
+        ixy="-8.54250314743155E-10"
+        ixz="-3.40905422018173E-09"
+        iyy="7.68751523460337E-07"
+        iyz="2.65062440645518E-09"
+        izz="7.26221149125628E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/ultrasonic_br.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/ultrasonic_br.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ultrasonic_joint_br"
+    type="fixed">
+    <origin
+      xyz="-0.0565606470918482 0.119187021096338 -0.031"
+      rpy="3.14159265358979 0 -2.84488668075076" />
+    <parent
+      link="base_link" />
+    <child
+      link="ultrasonic_br" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="depth_cam">
+    <inertial>
+      <origin
+        xyz="0.00132191552494907 -0.000392007210431269 -0.0222605569616031"
+        rpy="0 0 0" />
+      <mass
+        value="0.188133920196831" />
+      <inertia
+        ixx="6.91459455879894E-05"
+        ixy="2.54332859259088E-06"
+        ixz="1.91366261320705E-05"
+        iyy="0.000449074814232154"
+        iyz="-4.27256155918481E-06"
+        izz="0.000408304016415217" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/depth_cam.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/depth_cam.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="depth_cam_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.146658788505756 0.0427000000000005"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="depth_cam" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="lidar">
+    <inertial>
+      <origin
+        xyz="-3.97749846947626E-10 0.0118651639742243 -9.54386087724301E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.100511981883415" />
+      <inertia
+        ixx="3.39518063996325E-05"
+        ixy="-1.6211120950128E-12"
+        ixz="-2.92284267016588E-13"
+        iyy="4.1935853096105E-05"
+        iyz="1.1815579647801E-07"
+        izz="3.44778101670497E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/lidar.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.501960784313725 0.501960784313725 0.501960784313725 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/lidar.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lidar_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.1005 0.0072113248654052"
+      rpy="-1.5707963267949 0 -1.5707963267949" />
+    <parent
+      link="base_link" />
+    <child
+      link="lidar" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="screen">
+    <inertial>
+      <origin
+        xyz="-1.24638847975239E-07 0.0013371323974908 0.00160606068028191"
+        rpy="0 0 0" />
+      <mass
+        value="0.00357270774970056" />
+      <inertia
+        ixx="1.29976980207027E-07"
+        ixy="-1.78182996362165E-11"
+        ixz="-4.24689246841474E-13"
+        iyy="2.09902246549457E-07"
+        iyz="1.92672613573332E-09"
+        izz="3.37075734369407E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/screen.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.768627450980392 0.768627450980392 0.768627450980392 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/screen.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="screen_joint"
+    type="fixed">
+    <origin
+      xyz="0 0.121521156261136 0.0540000000000046"
+      rpy="1.5707963267949 0 -3.14159265358979" />
+    <parent
+      link="base_link" />
+    <child
+      link="screen" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+
+  <xacro:if value="$(arg flag_enable)">
+    <link
+      name="flag">
+      <inertial>
+        <origin
+          xyz="0.0249185518105129 -0.170067519347241 -0.000222734216111346"
+          rpy="0 0 0" />
+        <mass
+          value="0.0374187697708756" />
+        <inertia
+          ixx="0.00108799032272128"
+          ixy="-6.06514391971722E-05"
+          ixz="-2.07236681084901E-07"
+          iyy="7.05873812366136E-05"
+          iyz="-1.13163625013946E-06"
+          izz="0.00115807893485493" />
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/flag.STL" />
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="0.796078431372549 0.823529411764706 0.937254901960784 1" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/flag.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint
+      name="flag_joint"
+      type="fixed">
+      <origin
+        xyz="-0.0496954854378495 0.124843221166346 0.625600000000005"
+        rpy="1.5707963267949 0 1.61494047314374" />
+      <parent
+        link="base_link" />
+      <child
+        link="flag" />
+    </joint>
+  </xacro:if>
+
+  <link
+    name="arm_Rot">
+    <inertial>
+      <origin
+        xyz="-1.27894101951934E-05 0.0208058767653727 0.00585680210359747"
+        rpy="0 0 0" />
+      <mass
+        value="0.0689676051678483" />
+      <inertia
+        ixx="1.10736817655159E-05"
+        ixy="-9.06572517495388E-09"
+        ixz="-2.13237951815141E-10"
+        iyy="2.24480121987499E-05"
+        iyz="-4.10984989642458E-07"
+        izz="1.70252517510809E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/arm_Rot.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/arm_Rot.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_Rot_joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.079274 0.06"
+      rpy="1.5708 0 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="arm_Rot" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="${pi/-2}"
+      upper="${pi/2}"
+      effort="2"
+      velocity="2"
+      />
+  </joint>
+  <link
+    name="arm_Shoulder">
+    <inertial>
+      <origin
+        xyz="0.0764974362945755 0.000442680770353329 -4.93690401059954E-09"
+        rpy="0 0 0" />
+      <mass
+        value="0.104616018825837" />
+      <inertia
+        ixx="3.85677839717214E-05"
+        ixy="1.84827309047044E-08"
+        ixz="1.42612941509626E-12"
+        iyy="2.54245117502168E-05"
+        iyz="-2.05142765424474E-12"
+        izz="5.51611966703411E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/arm_Shoulder.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.501960784313725 0.501960784313725 0.501960784313725 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/arm_Shoulder.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_Shoulder_joint"
+    type="revolute">
+    <origin
+      xyz="0 0.0281 -0.00625"
+      rpy="3.1416 0 1.5708" />
+    <parent
+      link="arm_Rot" />
+    <child
+      link="arm_Shoulder" />
+    <axis
+      xyz="1 0 0" />
+      <limit
+      lower="${pi/-2}"
+      upper="${pi/2}"
+      effort="2"
+      velocity="2"
+      />
+  </joint>
+  <link
+    name="arm_Elbow">
+    <inertial>
+      <origin
+        xyz="0.000768647609078278 0.0642294520091309 -2.34835863116567E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.0709795960901316" />
+      <inertia
+        ixx="2.06491501981418E-05"
+        ixy="1.76077623308388E-08"
+        ixz="-6.06300089698489E-13"
+        iyy="2.45686930201746E-05"
+        iyz="3.04033870141042E-12"
+        izz="3.79131240892547E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/arm_Elbow.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.501960784313725 0.501960784313725 0.501960784313725 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/arm_Elbow.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_Elbow_joint"
+    type="revolute">
+    <origin
+      xyz="0.1378 0 0"
+      rpy="-3.1416 0 1.5708" />
+    <parent
+      link="arm_Shoulder" />
+    <child
+      link="arm_Elbow" />
+    <axis
+      xyz="1 0 0" />
+      <limit
+      lower="${pi/-2}"
+      upper="${pi/2}"
+      effort="2"
+      velocity="2"
+      />
+  </joint>
+  <link
+    name="arm_Wrist">
+    <inertial>
+      <origin
+        xyz="0.0225315136140379 0.000488092971965825 -2.74405760168628E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0464803878756425" />
+      <inertia
+        ixx="1.36228105923869E-05"
+        ixy="-2.7486243117372E-08"
+        ixz="-2.82180089490711E-08"
+        iyy="7.22412070962973E-06"
+        iyz="3.4652740053439E-09"
+        izz="1.75204377049058E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/arm_Wrist.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.501960784313725 0.501960784313725 0.501960784313725 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/arm_Wrist.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="arm_Wrist_joint"
+    type="revolute">
+    <origin
+      xyz="-0.00014 0.14265 0"
+      rpy="3.1416 0 1.5708" />
+    <parent
+      link="arm_Elbow" />
+    <child
+      link="arm_Wrist" />
+    <axis
+      xyz="1 0 0" />
+      <limit
+      lower="${pi/-2}"
+      upper="${pi/2}"
+      effort="2"
+      velocity="2"
+      />
+  </joint>
+  <link
+    name="Gripper">
+    <inertial>
+      <origin
+        xyz="0.0128439388984141 0.00467107677719844 -0.023531822516204"
+        rpy="0 0 0" />
+      <mass
+        value="0.0109603788959771" />
+      <inertia
+        ixx="1.64287457972505E-06"
+        ixy="-2.54915969005551E-10"
+        ixz="-3.17766452649769E-07"
+        iyy="2.96639543247368E-06"
+        iyz="-7.8877045337556E-08"
+        izz="1.49193844890504E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/Gripper.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/Gripper.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Gripper_joint"
+    type="revolute">
+    <origin
+      xyz="0.0435 -0.012 0.0045"
+      rpy="-1.5708 0 0" />
+    <parent
+      link="arm_Wrist" />
+    <child
+      link="Gripper" />
+    <axis
+      xyz="0 0 1" />
+      <limit
+      lower="0"
+      upper="${pi/2}"
+      effort="2"
+      velocity="2"
+      />
+  </joint>
+  <link
+    name="_gripper_link_r">
+    <inertial>
+      <origin
+        xyz="-1.28017477174502E-08 0.00327806945611438 -0.015628977594268"
+        rpy="0 0 0" />
+      <mass
+        value="0.00257857268754656" />
+      <inertia
+        ixx="4.78055533789155E-07"
+        ixy="-5.230783542464E-14"
+        ixz="-2.66258471113313E-13"
+        iyy="4.85504704619794E-07"
+        iyz="-3.012555423281E-08"
+        izz="3.42900323604584E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/_gripper_link_r.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/_gripper_link_r.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="_gripper_link_joint_r"
+    type="revolute">
+    <origin
+      xyz="0.0605 0.0205 -0.0055"
+      rpy="1.5708 0 -1.3641" />
+    <parent
+      link="arm_Wrist" />
+    <child
+      link="_gripper_link_r" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="gripper_finger_r">
+    <inertial>
+      <origin
+        xyz="0.0053582194655247 0.00456985538673528 -0.0146658643393019"
+        rpy="0 0 0" />
+      <mass
+        value="0.00531205810762776" />
+      <inertia
+        ixx="6.56191216382328E-07"
+        ixy="4.9417968242523E-09"
+        ixz="-1.23756532787867E-07"
+        iyy="7.67327744037516E-07"
+        iyz="3.35637410041389E-08"
+        izz="1.97644006824673E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/gripper_finger_r.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/gripper_finger_r.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper_finger_joint_r"
+    type="revolute">
+    <origin
+      xyz="0 0.01 -0.037"
+      rpy="0 0.20667 3.1416" />
+    <parent
+      link="_gripper_link_r" />
+    <child
+      link="gripper_finger_r" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="_gripper_link_l">
+    <inertial>
+      <origin
+        xyz="-2.05686406795635E-09 0.00327805387383495 -0.0156289677422455"
+        rpy="0 0 0" />
+      <mass
+        value="0.0025785751096632" />
+      <inertia
+        ixx="4.78055731035803E-07"
+        ixy="1.11114248069431E-14"
+        ixz="5.45978048241403E-14"
+        iyy="4.85504889003676E-07"
+        iyz="-3.01256260104972E-08"
+        izz="3.4290092499709E-08" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/_gripper_link_l.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/_gripper_link_l.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="_gripper_link_joint_l"
+    type="revolute">
+    <origin
+      xyz="0.0605 -0.0205 -0.0055"
+      rpy="1.5708 0 -1.7775" />
+    <parent
+      link="arm_Wrist" />
+    <child
+      link="_gripper_link_l" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="gripper_finger_l">
+    <inertial>
+      <origin
+        xyz="0.00535821399237165 0.00543015238565805 -0.0146658496889369"
+        rpy="0 0 0" />
+      <mass
+        value="0.00531205810762777" />
+      <inertia
+        ixx="6.56191216382329E-07"
+        ixy="-4.94179682425222E-09"
+        ixz="-1.23756532787868E-07"
+        iyy="7.67327744037519E-07"
+        iyz="-3.35637410041387E-08"
+        izz="1.97644006824674E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/gripper_finger_l.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/gripper_finger_l.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gripper_finger_joint_l"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.037"
+      rpy="0 0.20667 0" />
+    <parent
+      link="_gripper_link_l" />
+    <child
+      link="gripper_finger_l" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="_Gripper_r">
+    <inertial>
+      <origin
+        xyz="-0.011058953981311 0.00572378908343621 -0.0203029402870159"
+        rpy="0 0 0" />
+      <mass
+        value="0.0127576574866818" />
+      <inertia
+        ixx="1.91784274511554E-06"
+        ixy="-2.13316668505462E-10"
+        ixz="3.18097729104346E-07"
+        iyy="3.19294602407598E-06"
+        iyz="-1.86219200901589E-07"
+        izz="1.63755141963222E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/_Gripper_r.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/_Gripper_r.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="_Gripper_joint_r"
+    type="revolute">
+    <origin
+      xyz="0.0435 0.012 0.0045"
+      rpy="-1.5708 0 -3.1416" />
+    <parent
+      link="arm_Wrist" />
+    <child
+      link="_Gripper_r" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="0"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+</robot>

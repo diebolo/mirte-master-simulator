@@ -1,0 +1,8 @@
+<launch>
+    <arg name="flag_enable" default="0" />
+    
+    <param name="robot_description"
+        command="$(find xacro)/xacro $(find mirte_master_description)/urdf/mirte_master.xacro flag_enable:=$(arg flag_enable)" />
+<!-- flag_enable:= -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+</launch>
