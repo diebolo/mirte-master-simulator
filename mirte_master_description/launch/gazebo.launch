@@ -1,17 +1,19 @@
 <launch>
   <include
-    file="$(find gazebo_ros)/launch/empty_world.launch" />
+    file="$(find gazebo_ros)/launch/empty_world.launch" >
+  <arg name="paused" value="true"/>
+  </include>
   <node
     name="tf_footprint_base"
     pkg="tf"
     type="static_transform_publisher"
     args="0 0 0 0 0 0 base_link base_footprint 40" />
 
-  <node
+  <!-- <node
     name="fake_joint_calibration"
     pkg="rostopic"
     type="rostopic"
-    args="pub /calibrated std_msgs/Bool true" />
+    args="pub /calibrated std_msgs/Bool true" /> -->
 
   <include file="$(find mirte_master_description)/launch/spawn_mirte_master.launch" />
 </launch>
