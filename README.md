@@ -8,6 +8,7 @@ This packaged is structered as the [mirte-gazebo](https://github.com/ArendJan/mi
 git clone git@github.com:diebolo/mirte-master-simulator.git
 cd mirte-master-simulator
 git submodule update --init --recursive
+rosdep install --from-paths src --ignore-src -r -y
 ```
 
 ## Setup notes

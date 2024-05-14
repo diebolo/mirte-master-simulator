@@ -12,6 +12,13 @@ Stephen Brawner (brawner@gmail.com)
   <!-- TODO FIX -->
   <!-- <xacro:include filename="$(find mirte_master_gazebo)/urdf/mirte_master_description.gazebo" /> -->
 
+  <xacro:include filename="$(find gazebo_sensor_collection)/urdf/cameras/rgbd/orbbec_astra_pro_plus.urdf.xacro"/>
+
+  <!-- TODO: CHANGE TO CAMERA -->
+  <xacro:sensor_orbbec_astra_pro_plus name="camera" parent="base_link" color="black">
+    <origin xyz="0.01 -0.146658788505756 0.0427000000000005" rpy="0 0 ${radians(-90)}" />
+  </xacro:sensor_orbbec_astra_pro_plus>
+
   <link
     name="base_link">
     <inertial>
@@ -519,7 +526,7 @@ Stephen Brawner (brawner@gmail.com)
     <axis
       xyz="0 0 0" />
   </joint>
-  <link
+  <!-- <link
     name="depth_cam">
     <inertial>
       <origin
@@ -571,7 +578,7 @@ Stephen Brawner (brawner@gmail.com)
       link="depth_cam" />
     <axis
       xyz="0 0 0" />
-  </joint>
+  </joint> -->
   <link
     name="lidar">
     <inertial>
