@@ -2,11 +2,11 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
     <xacro:macro name="wheel_gazebo" params="name">
         <gazebo reference="${name}">
-            <selfCollide>false</selfCollide>
+            <!-- <selfCollide>false</selfCollide> -->
             <gravity>true</gravity>
-            <mu1>30</mu1>
-            <mu2>30</mu2>
-            <!-- <kp>1e50</kp> -->
+            <mu1>5.0</mu1>
+            <mu2>5.0</mu2>
+            <!-- <kp>1e2</kp> -->
             <!-- <kd>1e50</kd> -->
             <material>Gazebo/DarkGrey</material>
         </gazebo>

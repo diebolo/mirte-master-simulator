@@ -3,6 +3,7 @@
   <!-- <gazebo> -->
     <!-- ros_control plugin -->
     <gazebo>
+
       <plugin name="mirte_master_mechanum_drive" filename="libgazebo_ros_mecanum_drive.so">
         <commandTopic>mobile_base_controller/cmd_vel</commandTopic>
         <odometryTopic>odom</odometryTopic>
@@ -13,20 +14,20 @@
         <RightFront>wheel_joint_fr</RightFront>
         <RightRear>wheel_joint_br</RightRear>
         <odometryRate>20</odometryRate>
-        <publishWheelTF>false</publishWheelTF>
+        <publishWheelTF>true</publishWheelTF>
         <publishWheelJointState>true</publishWheelJointState>
-        <WheelTorque>30</WheelTorque>
+        <WheelTorque>0.100</WheelTorque>
         <WheelSeparationW>0.170</WheelSeparationW>
         <WheelSeparationL>0.306</WheelSeparationL>
-        <wheelAccel>5</wheelAccel>
+        <wheelAccel>2.5</wheelAccel>
         <wheelDiameter>0.106</wheelDiameter> <!--Was 0.13-->
         <publishOdom>true</publishOdom>
         <isRollerModel>false</isRollerModel>
+      </plugin>
 
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-          <robotNamespace>/mirte</robotNamespace>
+          <robotNamespace>/</robotNamespace>
         </plugin>
-      </plugin>
     </gazebo>
     <!--     
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">

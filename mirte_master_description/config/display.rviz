@@ -60,47 +60,11 @@ Visualization Manager:
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
-        Gripper:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         Link Tree Style: Links in Alphabetic Order
-        _Gripper_r:
+        base_footprint:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
-        _gripper_link_l:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        _gripper_link_r:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_Elbow:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_Rot:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_Shoulder:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        arm_Wrist:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
         base_link:
           Alpha: 1
           Show Axes: false
@@ -111,21 +75,27 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        depth_cam:
+        camera_depth_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_depth_optical_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        camera_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        gripper_finger_l:
+        camera_rgb_frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
-        gripper_finger_r:
+        camera_rgb_optical_frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
         lidar:
           Alpha: 1
           Show Axes: false
@@ -186,7 +156,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: base_link
+    Fixed Frame: base_footprint
     Frame Rate: 30
   Name: root
   Tools:
@@ -210,7 +180,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 10
+      Distance: 1.1084387302398682
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -226,9 +196,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.785398006439209
+      Pitch: 0.020398076623678207
       Target Frame: <Fixed Frame>
-      Yaw: 0.785398006439209
+      Yaw: 0.210398331284523
     Saved: ~
 Window Geometry:
   Displays:

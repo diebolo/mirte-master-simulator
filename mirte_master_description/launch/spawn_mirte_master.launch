@@ -3,16 +3,38 @@
     names-->
     <arg name="x" default="0" />
     <arg name="y" default="0" />
-    <arg name="z" default="1" />
+    <arg name="z" default="0.1" />
     <arg name="yaw" default="0" />
 
     <include file="$(find mirte_master_description)/launch/description.launch">
         <!-- TODO: Make the model flexible (disable enable sensors) -->
     </include>
 
+
+  <rosparam param="/gazebo_ros_control/pid_gains">
+    wheel_joint_fr:
+      p: 1
+      i: 0.1
+      d: 0
+    wheel_joint_br:
+      p: 1
+      i: 0.1
+      d: 0
+    wheel_joint_fl:
+      p: 1
+      i: 0.1
+      d: 0
+    wheel_joint_bl:
+      p: 1
+      i: 0.1
+      d: 0
+  </rosparam>
+
     <!-- Spawn Mirte Master -->
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
         args="-urdf -model $(arg name) -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)" />
 
-    <include file="$(find gazebo_mecanum_plugins)/launch/gazebo_mecanum_pid.launch"></include>
+    <node pkg="gazebo_mecanum_plugins" type="gazebo_mecanum_plugin_pid" respawn="false" name="gazebo_mecanum_plugin_pid" output="screen">
+        <rosparam file="$(find mirte_master_description)/param/pid_parameter.yaml" command="load" />
+    </node>
 </launch>
