@@ -6,13 +6,14 @@ Stephen Brawner (brawner@gmail.com)
 <robot
   name="mirte_master" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:arg name="flag_enable" default="false" />
-  <!-- <xacro:property name="pi" value="3.1415" /> -->
-  <!-- Bring in simulation data for Gazebo. -->
-  <!-- TODO FIX -->
-  <!-- <xacro:include filename="$(find mirte_master_gazebo)/urdf/mirte_master_description.gazebo" /> -->
+  <xacro:arg name="flag_enable" default="False" />
+  <xacro:arg name="arm_enable" default="False" />
 
-  <xacro:include filename="$(find gazebo_sensor_collection)/urdf/cameras/rgbd/orbbec_astra_pro_plus.urdf.xacro"/>
+  <!-- Bring in simulation data for Gazebo. -->
+  <xacro:include filename="$(find mirte_master_description)/urdf/mirte_master_base.gazebo.xacro" />
+
+  <xacro:include
+    filename="$(find gazebo_sensor_collection)/urdf/cameras/rgbd/orbbec_astra_pro_plus.urdf.xacro" />
 
   <!-- TODO: CHANGE TO CAMERA -->
   <xacro:sensor_orbbec_astra_pro_plus name="camera" parent="base_link" color="black">
@@ -101,21 +102,27 @@ Stephen Brawner (brawner@gmail.com)
     <origin
       xyz="0.153 -0.085 -0.0455"
       rpy="1.5708 0 -1.5708" />
-    <parent
-      link="base_link" />
-    <child
-      link="wheel_fl" />
-    <axis
-      xyz="0 0 -1" />
+    <parent link="base_link" />
+    <child link="wheel_fl" />
+    <axis xyz="0 0 -1" />
+    <dynamics damping="3.0" friction="5.0" />
   </joint>
+
+  <transmission name="wheel_trans_fl">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_joint_fl">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_act_fl">
+        <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+</transmission>
+
   <link
     name="wheel_br">
     <inertial>
-      <origin
-        xyz="-1.0009E-10 2.9473E-10 -0.025064"
-        rpy="0 0 0" />
-      <mass
-        value="0.26661" />
+      <origin xyz="-1.0009E-10 2.9473E-10 -0.025064" />
+      <mass value="0.26661" />
       <inertia
         ixx="8.0546E-05"
         ixy="4.8209E-17"
@@ -152,21 +159,27 @@ Stephen Brawner (brawner@gmail.com)
     <origin
       xyz="-0.153 0.085 -0.0455"
       rpy="1.5708 0 -1.5708" />
-    <parent
-      link="base_link" />
-    <child
-      link="wheel_br" />
-    <axis
-      xyz="0 0 1" />
+    <parent link="base_link" />
+    <child link="wheel_br" />
+    <axis xyz="0 0 1" />
+    <dynamics damping="3.0" friction="5.0" />
   </joint>
+
+  <transmission name="wheel_trans_br">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_joint_br">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_act_br">
+        <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
   <link
     name="wheel_fr">
     <inertial>
-      <origin
-        xyz="-1.9E-10 2.1252E-10 -0.025064"
-        rpy="0 0 0" />
-      <mass
-        value="0.26661" />
+      <origin xyz="-1.9E-10 2.1252E-10 -0.025064" />
+      <mass value="0.26661" />
       <inertia
         ixx="8.0546E-05"
         ixy="-4.5866E-15"
@@ -176,9 +189,9 @@ Stephen Brawner (brawner@gmail.com)
         izz="9.3196E-05" />
     </inertial>
     <visual>
-      <origin
+      <!-- <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 0 0" /> -->
       <geometry>
         <mesh
           filename="package://mirte_master_description/meshes/wheel_fr.STL" />
@@ -203,19 +216,26 @@ Stephen Brawner (brawner@gmail.com)
     <origin
       xyz="-0.153 -0.085 -0.0455"
       rpy="1.5708 0 -1.5708" />
-    <parent
-      link="base_link" />
-    <child
-      link="wheel_fr" />
-    <axis
-      xyz="0 0 1" />
+    <parent link="base_link" />
+    <child link="wheel_fr" />
+    <axis xyz="0 0 1" />
+    <dynamics damping="3.0" friction="5.0" />
   </joint>
+
+  <transmission name="wheel_trans_fr">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_joint_fr">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_act_fr">
+        <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+</transmission>
+
   <link
     name="wheel_bl">
     <inertial>
-      <origin
-        xyz="-1.9E-10 2.1252E-10 0.024936"
-        rpy="0 0 0" />
+      <origin xyz="-1.9E-10 2.1252E-10 0.024936" />
       <mass
         value="0.26661" />
       <inertia
@@ -253,13 +273,22 @@ Stephen Brawner (brawner@gmail.com)
     <origin
       xyz="0.153 0.085 -0.0455"
       rpy="1.5708 0 -1.5708" />
-    <parent
-      link="base_link" />
-    <child
-      link="wheel_bl" />
-    <axis
-      xyz="0 0 -1" />
+    <parent link="base_link" />
+    <child link="wheel_bl" />
+    <axis xyz="0 0 -1" />
+    <dynamics damping="3.0" friction="5.0" />
   </joint>
+
+  <transmission name="wheel_trans_bl">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_joint_bl">
+        <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_act_bl">
+        <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+</transmission>
+
 
   <link
     name="cam_front">
@@ -534,7 +563,8 @@ Stephen Brawner (brawner@gmail.com)
         rpy="0 0 0" />
       <mass
         value="0.188133920196831" />
-      <inertia
+      <inerti  <xacro:arg name="flag_enable" default="False" />
+a
         ixx="6.91459455879894E-05"
         ixy="2.54332859259088E-06"
         ixz="1.91366261320705E-05"
@@ -690,5 +720,7 @@ Stephen Brawner (brawner@gmail.com)
     <xacro:include filename="$(mirte_master_description/urdf/flag.xacro)" />
   </xacro:if>
 
-  <xacro:include filename="$(find mirte_master_description)/urdf/arm.xacro" />
+  <xacro:if value="$(arg arm_enable)">
+    <xacro:include filename="$(find mirte_master_description)/urdf/arm.xacro" />
+  </xacro:if>
 </robot>

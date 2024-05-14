@@ -1,3 +1,6 @@
 [submodule "gazebo_sensor_collection"]
 	path = gazebo_sensor_collection
 	url = git@github.com:SuperJappie08/gazebo_sensor_collection.git
+[submodule "gazebo_mecanum_plugins"]
+	path = gazebo_mecanum_plugins
+	url = git@github.com:qaz9517532846/gazebo_mecanum_plugins.git

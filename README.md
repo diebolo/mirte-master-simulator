@@ -3,6 +3,10 @@
 
 This packaged is structered as the [mirte-gazebo](https://github.com/ArendJan/mirte-gazebo/tree/rsp) Repository.
 
+> **NOTES:**
+> Use `mirte_master_description` not `mirte_master_gazebo`
+
+
 ## Install
 ```
 git clone git@github.com:diebolo/mirte-master-simulator.git

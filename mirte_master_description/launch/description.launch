@@ -1,5 +1,5 @@
 <launch>
-    <arg name="flag_enable" default="0" />
+    <arg name="flag_enable" default="False" />
     
     <param name="robot_description"
         command="$(find xacro)/xacro '$(find mirte_master_description)/urdf/mirte_master.xacro' flag_enable:=$(arg flag_enable)" />

@@ -17,6 +17,8 @@ for Mirte Master robot</p>
   <depend>xacro</depend>
   <depend>joint_state_publisher_gui</depend>
   <depend>gazebo</depend>
+  <depend>gazebo_ros</depend>
+  <depend>gazebo_mecanum_plugins</depend>
   <depend>gazebo_sensor_collection</depend>
   <export>
     <architecture_independent />

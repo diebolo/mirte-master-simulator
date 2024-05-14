@@ -1,5 +1,6 @@
 <launch>
-    <arg name="name" default="mirte_master" /> <!-- Use '$(anon mirte_master)' for anonomized names-->
+    <arg name="name" default="mirte_master" /> <!-- Use '$(anon mirte_master)' for anonomized
+    names-->
     <arg name="x" default="0" />
     <arg name="y" default="0" />
     <arg name="z" default="1" />
@@ -12,4 +13,6 @@
     <!-- Spawn Mirte Master -->
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
         args="-urdf -model $(arg name) -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)" />
+
+    <include file="$(find gazebo_mecanum_plugins)/launch/gazebo_mecanum_pid.launch"></include>
 </launch>
