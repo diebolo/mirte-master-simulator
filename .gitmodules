@@ -1,0 +1,3 @@
+[submodule "gazebo_sensor_collection"]
+	path = gazebo_sensor_collection
+	url = git@github.com:SuperJappie08/gazebo_sensor_collection.git

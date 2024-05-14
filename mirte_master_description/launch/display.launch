@@ -14,5 +14,5 @@
     name="rviz"
     pkg="rviz"
     type="rviz"
-    args="-d $(find mirte_master_description)/urdf.rviz" />
+    args="-d $(find mirte_master_description)/config/display.rviz" />
 </launch>
