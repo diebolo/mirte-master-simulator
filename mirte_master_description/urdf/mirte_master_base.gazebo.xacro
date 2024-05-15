@@ -5,10 +5,10 @@
     <gazebo>
 
       <plugin name="mirte_master_mechanum_drive" filename="libgazebo_ros_mecanum_drive.so">
-        <commandTopic>mobile_base_controller/cmd_vel</commandTopic>
+        <commandTopic>mobile_base_controller/cmd_vel_corrected</commandTopic>
         <odometryTopic>odom</odometryTopic>
         <odometryFrame>odom</odometryFrame>
-        <robotBaseFrame>base_link</robotBaseFrame>
+        <robotBaseFrame>base_footprint</robotBaseFrame>
         <LeftRear>wheel_joint_bl</LeftRear>
         <LeftFront>wheel_joint_fl</LeftFront>
         <RightFront>wheel_joint_fr</RightFront>
@@ -17,12 +17,12 @@
         <publishWheelTF>false</publishWheelTF>
         <publishWheelJointState>true</publishWheelJointState>
         <WheelTorque>50</WheelTorque>
-        <WheelSeparationW>0.170</WheelSeparationW>
-        <WheelSeparationL>0.3</WheelSeparationL> <!-- 3.06 -->
-        <wheelAccel>1</wheelAccel>
+        <WheelSeparationW>0.28</WheelSeparationW>
+        <WheelSeparationL>0.175</WheelSeparationL> <!-- 3.06 -->
+        <wheelAccel>5</wheelAccel>
         <wheelDiameter>0.1</wheelDiameter> <!-- 1.06 Was 0.13-->
         <publishOdom>true</publishOdom>
-        <isRollerModel>true</isRollerModel>
+        <isRollerModel>false</isRollerModel>
       </plugin>
 
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
@@ -78,7 +78,8 @@
   <gazebo reference="base_link">
     <material>Gazebo/White</material>
     <gravity>true</gravity>
-    <selfCollide>false</selfCollide>
+    <kinematic>$(arg kinematic_only)</kinematic>
+    <!-- <selfCollide>false</selfCollide> -->
   </gazebo>
 
   <!-- Individual link colouring still needed in Gazebo 2.x -->
@@ -121,8 +122,8 @@
        the body level. -->
   <xacro:include filename="$(find mirte_master_description)/urdf/wheel.gazebo.xacro" />
 
-  <xacro:wheel_gazebo name="wheel_bl" />
-  <xacro:wheel_gazebo name="wheel_br" />
-  <xacro:wheel_gazebo name="wheel_fl"/>
-  <xacro:wheel_gazebo name="wheel_fr"/>
+  <xacro:wheel_gazebo id="bl" />
+  <xacro:wheel_gazebo id="br" />
+  <xacro:wheel_gazebo id="fl"/>
+  <xacro:wheel_gazebo id="fr"/>
 </robot>

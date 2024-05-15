@@ -14,13 +14,16 @@ Stephen Brawner (brawner@gmail.com)
   <xacro:arg name="lidar_enable" default="False" />
   <xacro:arg name="depth_camera_enable" default="False" />
 
+  <!-- Disable momentum on the main body, makes the simulation behave slightly nicer, at the cost of
+  inaccuracies (It is better toggle this when the robot hits the ground)-->
+  <xacro:arg name="kinematic_only" default="False" />
 
   <xacro:property name="wheel_radius" value="0.053" />
   <xacro:property name="wheel_length" value="0.055" />
   <xacro:property name="wheel_mass" value="0.26661" />
 
-  <xacro:property name="wheel_velocity" value="10" />
-  <xacro:property name="wheel_effort" value="10" /> <!-- 5 -->
+  <xacro:property name="wheel_velocity" value="8" /> <!-- Was 10 based on calc-->
+  <xacro:property name="wheel_effort" value="5" /> <!-- 5 -->
 
   <xacro:property name="base_mass" value="4.0815" /> <!-- 3.0815 -->
 
@@ -30,7 +33,6 @@ Stephen Brawner (brawner@gmail.com)
   <xacro:include
     filename="$(find gazebo_sensor_collection)/urdf/cameras/rgbd/orbbec_astra_pro_plus.urdf.xacro" />
 
-  <!-- TODO: CHANGE TO CAMERA -->
   <xacro:if value="$(arg depth_camera_enable)">
     <xacro:sensor_orbbec_astra_pro_plus name="camera" parent="base_link" color="black">
       <origin xyz="0.01 -0.146658788505756 0.0427" rpy="0 0 ${radians(-90)}" />
@@ -40,7 +42,7 @@ Stephen Brawner (brawner@gmail.com)
   <link name="base_footprint"></link>
 
   <joint name="base_link_joint" type="fixed">
-    <origin xyz="0 0 0.10" rpy="0 0 0" />
+    <origin xyz="0 0 0.10" rpy="0 0 ${radians(90)}" />
     <parent link="base_footprint" />
     <child link="base_link" />
   </joint>
@@ -49,7 +51,7 @@ Stephen Brawner (brawner@gmail.com)
   <link
     name="base_link">
     <inertial>
-      <!-- <origin xyz="-0.00024285 0.0082178 -0.0037661" /> -->
+      <origin xyz="-0.00024285 0.0082178 -0.0037661" />
       <mass value="${base_mass}" />
       <!-- <inertia
         ixx="0.01245"
@@ -58,7 +60,7 @@ Stephen Brawner (brawner@gmail.com)
         iyy="0.0091262"
         iyz="-0.00017974"
         izz="0.020706" /> -->
-      <inertia 
+      <inertia
         ixx="${base_mass * (0.06**2 + 0.28**2) / 12}"
         iyy="${base_mass * (0.19**2 + 0.06**2) / 12}"
         izz="${base_mass * (0.19**2 + 0.28**2) / 12}"
@@ -124,7 +126,7 @@ Stephen Brawner (brawner@gmail.com)
     <child link="wheel_fl" />
     <axis xyz="0 0 -1" />
     <dynamics damping="3.0" friction="5.0" />
-    <limit velocity="${wheel_velocity}" effort="${wheel_effort}"/>
+    <limit velocity="${wheel_velocity}" effort="${wheel_effort}" />
   </joint>
 
   <transmission name="wheel_trans_fl">
@@ -175,7 +177,7 @@ Stephen Brawner (brawner@gmail.com)
     <child link="wheel_br" />
     <axis xyz="0 0 -1" />
     <dynamics damping="3.0" friction="5.0" />
-    <limit velocity="${wheel_velocity}" effort="${wheel_effort}"/>
+    <limit velocity="${wheel_velocity}" effort="${wheel_effort}" />
   </joint>
 
   <transmission name="wheel_trans_br">
@@ -225,7 +227,7 @@ Stephen Brawner (brawner@gmail.com)
     <child link="wheel_fr" />
     <axis xyz="0 0 -1" />
     <dynamics damping="3.0" friction="5.0" />
-    <limit velocity="${wheel_velocity}" effort="${wheel_effort}"/>
+    <limit velocity="${wheel_velocity}" effort="${wheel_effort}" />
   </joint>
 
   <transmission name="wheel_trans_fr">
@@ -275,7 +277,7 @@ Stephen Brawner (brawner@gmail.com)
     <child link="wheel_bl" />
     <axis xyz="0 0 -1" />
     <dynamics damping="3.0" friction="5.0" />
-    <limit velocity="${wheel_velocity}" effort="${wheel_effort}"/>
+    <limit velocity="${wheel_velocity}" effort="${wheel_effort}" />
   </joint>
 
   <transmission name="wheel_trans_bl">
@@ -723,7 +725,7 @@ a
   </xacro:if>
 
   <xacro:if value="$(arg flag_enable)">
-    <xacro:include filename="$(mirte_master_description/urdf/flag.xacro)" />
+    <xacro:include filename="$(find mirte_master_description)/urdf/flag.xacro" />
   </xacro:if>
 
   <xacro:if value="$(arg arm_enable)">

@@ -1,40 +1,91 @@
 <launch>
-    <arg name="name" default="mirte_master" /> <!-- Use '$(anon mirte_master)' for anonomized
+  <arg name="name" default="mirte_master" /> <!-- Use '$(anon mirte_master)' for anonomized
     names-->
-    <arg name="x" default="0" />
-    <arg name="y" default="0" />
-    <arg name="z" default="0.1" />
-    <arg name="yaw" default="0" />
+  <arg name="x" default="0" />
+  <arg name="y" default="0" />
+  <arg name="z" default="0.1" />
+  <arg name="yaw" default="0" />
 
-    <include file="$(find mirte_master_description)/launch/description.launch">
-        <!-- TODO: Make the model flexible (disable enable sensors) -->
-    </include>
+  <arg name="kinematic_only" default="False" />
+
+  <arg name="linear_velocity_limit" default="0.5" />
+  <arg name="angular_velocity_limit" default="0.5" />
+
+  <arg name="flag_enable" default="False" />
+  <arg name="arm_enable" default="False" />
+  <arg name="screen_enable" default="False" />
+  <arg name="front_camera_enable" default="False" />
+  <arg name="sonar_enable" default="False" />
+  <arg name="lidar_enable" default="False" />
+  <arg name="depth_camera_enable" default="True" />
+
+  <include file="$(find mirte_master_description)/launch/description.launch">
+    <arg name="flag_enable" value="$(arg flag_enable)" />
+    <arg name="arm_enable" value="$(arg arm_enable)" />
+    <arg name="screen_enable" value="$(arg screen_enable)" />
+    <arg name="front_camera_enable" value="$(arg front_camera_enable)" />
+    <arg name="sonar_enable" value="$(arg sonar_enable)" />
+    <arg name="lidar_enable" value="$(arg lidar_enable)" />
+    <arg name="depth_camera_enable" value="$(arg depth_camera_enable)" />
+    
+    <arg name="kinematic_only" value="$(arg kinematic_only)" />
+  </include>
 
 
-  <rosparam param="/gazebo_ros_control/pid_gains">
-    wheel_joint_fr:
-      p:  10 # 1
-      i: 0.5 #0.1
-      d: 0.0 #0
-    wheel_joint_br:
-      p:  10 # 1
-      i: 0.5 #0.1
-      d: 0.0 #0
-    wheel_joint_fl:
-      p:  10 # 1
-      i: 0.5 # 0.1
-      d: 0.0 # 0
-    wheel_joint_bl:
-      p:  10 # 1
-      i: 0.5 # 0.1
-      d: 0.0 # 0
-  </rosparam>
+  <group unless="$(arg kinematic_only)">
+    <rosparam param="/gazebo_ros_control/pid_gains">
+      wheel_joint_fr:
+        p: 1 # 1 # 10 # 1
+        i: 0 # 0.1 #0.5 #0.1
+        d: 0 # 0.0 #0.0 #0
+      wheel_joint_br:
+        p: 1 # 1 #10 # 1
+        i: 0 # 0.1 #0.5 #0.1
+        d: 0 # 0.0 #0.0 #0
+      wheel_joint_fl:
+        p: 1 # 1 #10 # 1
+        i: 0 # 0.1 #0.5 # 0.1
+        d: 0 # 0.0 #0.0 # 0
+      wheel_joint_bl:
+        p: 1 # 1 #10 # 1
+        i: 0 # 0.1 #0.5 # 0.1
+        d: 0 # 0.0 #0.0 # 0
+    </rosparam>
+  </group>
 
-    <!-- Spawn Mirte Master -->
-    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
-        args="-urdf -model $(arg name) -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)" />
+  <!-- If simulating the main body only as kinematic, we use an derivative/damper to get some physical limits back -->
+  <group if="$(arg kinematic_only)">
+    <rosparam param="/gazebo_ros_control/pid_gains">
+      wheel_joint_fr:
+        p: 1.0 # 1 # 10 # 1
+        i: 0.0 # 0.1 #0.5 #0.1
+        d: 0.2 # 0.0 #0.0 #0
+      wheel_joint_br:
+        p: 1.0 # 1 #10 # 1
+        i: 0.0 # 0.1 #0.5 #0.1
+        d: 0.2 # 0.0 #0.0 #0
+      wheel_joint_fl:
+        p: 1.0 # 1 #10 # 1
+        i: 0.0 # 0.1 #0.5 # 0.1
+        d: 0.2 # 0.0 #0.0 # 0
+      wheel_joint_bl:
+        p: 1.0 # 1 #10 # 1
+        i: 0.0 # 0.1 #0.5 # 0.1
+        d: 0.2 # 0.0 #0.0 # 0
+    </rosparam>
+  </group>
 
-    <node pkg="gazebo_mecanum_plugins" type="gazebo_mecanum_plugin_pid" respawn="false" name="gazebo_mecanum_plugin_pid" output="screen">
-        <rosparam file="$(find mirte_master_description)/param/pid_parameter.yaml" command="load" />
-    </node>
+  <!-- Spawn Mirte Master -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+    args="-urdf -model $(arg name) -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)" />
+
+  <node name="sim_velocity_limiter" pkg="mirte_master_velocity_limiter" type="velocity_limiter_node">
+    <param name="~linear_limit" type="double" value="$(arg linear_velocity_limit)" />
+    <param name="~angular_limit" type="double" value="$(arg angular_velocity_limit)" />
+  </node>
+
+  <node pkg="gazebo_mecanum_plugins" type="gazebo_mecanum_plugin_pid" respawn="false"
+    name="gazebo_mecanum_plugin_pid" output="screen">
+    <rosparam file="$(find mirte_master_description)/param/pid_parameter.yaml" command="load" />
+  </node>
 </launch>

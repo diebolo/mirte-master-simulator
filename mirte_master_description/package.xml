@@ -20,6 +20,7 @@ for Mirte Master robot</p>
   <depend>gazebo_ros</depend>
   <depend>gazebo_mecanum_plugins</depend>
   <depend>gazebo_sensor_collection</depend>
+  <exec_depend>mirte_master_velocity_limiter</exec_depend>  
   <export>
     <architecture_independent />
   </export>

@@ -1,7 +1,19 @@
 <launch>
+  <arg name="paused" default="False" />
+
+  <arg name="flag_enable" default="False" />
+  <arg name="arm_enable" default="False" />
+  <arg name="screen_enable" default="False" />
+  <arg name="front_camera_enable" default="False" />
+  <arg name="sonar_enable" default="False" />
+  <arg name="lidar_enable" default="False" />
+  <arg name="depth_camera_enable" default="True" />
+
+  <arg name="kinematic_only" default="False"/>
+
   <include
     file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="paused" value="true" />
+    <arg name="paused" value="$(arg paused)" />
     <!-- <arg name="physics" value="bullet"/> -->
   </include>
   <!-- <node
@@ -16,5 +28,15 @@
     type="rostopic"
     args="pub /calibrated std_msgs/Bool true" /> -->
 
-  <include file="$(find mirte_master_description)/launch/spawn_mirte_master.launch" />
+  <include file="$(find mirte_master_description)/launch/spawn_mirte_master.launch">
+    <arg name="flag_enable" value="$(arg flag_enable)" />
+    <arg name="arm_enable" value="$(arg arm_enable)" />
+    <arg name="screen_enable" value="$(arg screen_enable)" />
+    <arg name="front_camera_enable" value="$(arg front_camera_enable)" />
+    <arg name="sonar_enable" value="$(arg sonar_enable)" />
+    <arg name="lidar_enable" value="$(arg lidar_enable)" />
+    <arg name="depth_camera_enable" value="$(arg depth_camera_enable)" />
+
+    <arg name="kinematic_only" value="$(arg kinematic_only)"/>
+  </include>
 </launch>
