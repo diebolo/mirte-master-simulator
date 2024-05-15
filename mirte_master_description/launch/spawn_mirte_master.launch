@@ -13,21 +13,21 @@
 
   <rosparam param="/gazebo_ros_control/pid_gains">
     wheel_joint_fr:
-      p: 1
-      i: 0.1
-      d: 0
+      p:  10 # 1
+      i: 0.5 #0.1
+      d: 0.0 #0
     wheel_joint_br:
-      p: 1
-      i: 0.1
-      d: 0
+      p:  10 # 1
+      i: 0.5 #0.1
+      d: 0.0 #0
     wheel_joint_fl:
-      p: 1
-      i: 0.1
-      d: 0
+      p:  10 # 1
+      i: 0.5 # 0.1
+      d: 0.0 # 0
     wheel_joint_bl:
-      p: 1
-      i: 0.1
-      d: 0
+      p:  10 # 1
+      i: 0.5 # 0.1
+      d: 0.0 # 0
   </rosparam>
 
     <!-- Spawn Mirte Master -->

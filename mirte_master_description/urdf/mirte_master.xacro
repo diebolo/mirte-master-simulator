@@ -10,6 +10,19 @@ Stephen Brawner (brawner@gmail.com)
   <xacro:arg name="arm_enable" default="False" />
   <xacro:arg name="screen_enable" default="False" />
   <xacro:arg name="front_camera_enable" default="False" />
+  <xacro:arg name="sonar_enable" default="False" />
+  <xacro:arg name="lidar_enable" default="False" />
+  <xacro:arg name="depth_camera_enable" default="False" />
+
+
+  <xacro:property name="wheel_radius" value="0.053" />
+  <xacro:property name="wheel_length" value="0.055" />
+  <xacro:property name="wheel_mass" value="0.26661" />
+
+  <xacro:property name="wheel_velocity" value="10" />
+  <xacro:property name="wheel_effort" value="10" /> <!-- 5 -->
+
+  <xacro:property name="base_mass" value="4.0815" /> <!-- 3.0815 -->
 
   <!-- Bring in simulation data for Gazebo. -->
   <xacro:include filename="$(find mirte_master_description)/urdf/mirte_master_base.gazebo.xacro" />
@@ -18,14 +31,16 @@ Stephen Brawner (brawner@gmail.com)
     filename="$(find gazebo_sensor_collection)/urdf/cameras/rgbd/orbbec_astra_pro_plus.urdf.xacro" />
 
   <!-- TODO: CHANGE TO CAMERA -->
-  <xacro:sensor_orbbec_astra_pro_plus name="camera" parent="base_link" color="black">
-    <origin xyz="0.01 -0.146658788505756 0.0427000000000005" rpy="0 0 ${radians(-90)}" />
-  </xacro:sensor_orbbec_astra_pro_plus>
+  <xacro:if value="$(arg depth_camera_enable)">
+    <xacro:sensor_orbbec_astra_pro_plus name="camera" parent="base_link" color="black">
+      <origin xyz="0.01 -0.146658788505756 0.0427" rpy="0 0 ${radians(-90)}" />
+    </xacro:sensor_orbbec_astra_pro_plus>
+  </xacro:if>
 
   <link name="base_footprint"></link>
 
   <joint name="base_link_joint" type="fixed">
-    <origin xyz="0 0 0.10" rpy="0 0 ${radians(90)}" />
+    <origin xyz="0 0 0.10" rpy="0 0 0" />
     <parent link="base_footprint" />
     <child link="base_link" />
   </joint>
@@ -34,30 +49,28 @@ Stephen Brawner (brawner@gmail.com)
   <link
     name="base_link">
     <inertial>
-      <origin
-        xyz="-0.00024285 0.0082178 -0.0037661"
-        rpy="0 0 0" /> F <mass
-        value="3.0815" />
-      <inertia
+      <!-- <origin xyz="-0.00024285 0.0082178 -0.0037661" /> -->
+      <mass value="${base_mass}" />
+      <!-- <inertia
         ixx="0.01245"
         ixy="-6.0298E-07"
         ixz="-7.3071E-07"
         iyy="0.0091262"
         iyz="-0.00017974"
-        izz="0.020706" />
+        izz="0.020706" /> -->
+      <inertia 
+        ixx="${base_mass * (0.06**2 + 0.28**2) / 12}"
+        iyy="${base_mass * (0.19**2 + 0.06**2) / 12}"
+        izz="${base_mass * (0.19**2 + 0.28**2) / 12}"
+        ixy="0" ixz="0" iyz="0" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://mirte_master_description/meshes/base_link.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.52941 0.54902 0.54902 1" />
+      <material name="">
+        <color rgba="0.52941 0.54902 0.54902 1" />
       </material>
     </visual>
     <collision>
@@ -73,40 +86,31 @@ Stephen Brawner (brawner@gmail.com)
       </geometry>
     </collision>
   </link>
+
   <link
     name="wheel_fl">
     <inertial>
-      <origin
-        xyz="-1.1211E-10 2.9249E-10 0.024936"
-        rpy="0 0 0" />
-      <mass
-        value="0.26661" />
+      <origin xyz="0 0 0.025" />
+      <mass value="${wheel_mass}" />
       <inertia
-        ixx="8.0546E-05"
-        ixy="1.9673E-15"
-        ixz="1.226E-14"
-        iyy="8.0546E-05"
-        iyz="9.6889E-15"
-        izz="9.3196E-05" />
+        ixx="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        iyy="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        izz="${wheel_mass * (wheel_radius **2) / 2}"
+        ixy="0" ixz="0" iyz="0" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://mirte_master_description/meshes/wheel_fl.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
     <collision>
       <origin xyz="0 0 0.025" />
       <geometry>
-        <cylinder radius="0.053" length="0.055" />
+        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
       </geometry>
     </collision>
   </link>
@@ -120,6 +124,7 @@ Stephen Brawner (brawner@gmail.com)
     <child link="wheel_fl" />
     <axis xyz="0 0 -1" />
     <dynamics damping="3.0" friction="5.0" />
+    <limit velocity="${wheel_velocity}" effort="${wheel_effort}"/>
   </joint>
 
   <transmission name="wheel_trans_fl">
@@ -135,35 +140,28 @@ Stephen Brawner (brawner@gmail.com)
   <link
     name="wheel_br">
     <inertial>
-      <origin xyz="-1.0009E-10 2.9473E-10 -0.025064" />
-      <mass value="0.26661" />
+      <origin xyz="0 0 0.025" />
+      <mass value="${wheel_mass}" />
       <inertia
-        ixx="8.0546E-05"
-        ixy="4.8209E-17"
-        ixz="1.2652E-14"
-        iyy="8.0546E-05"
-        iyz="1.7571E-14"
-        izz="9.3196E-05" />
+        ixx="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        iyy="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        izz="${wheel_mass * (wheel_radius **2) / 2}"
+        ixy="0" ixz="0" iyz="0" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://mirte_master_description/meshes/wheel_br.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
 
     <collision>
       <origin xyz="0 0 -0.025" />
       <geometry>
-        <cylinder radius="0.053" length="0.055" />
+        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
       </geometry>
     </collision>
   </link>
@@ -175,8 +173,9 @@ Stephen Brawner (brawner@gmail.com)
       rpy="1.5708 0 -1.5708" />
     <parent link="base_link" />
     <child link="wheel_br" />
-    <axis xyz="0 0 1" />
+    <axis xyz="0 0 -1" />
     <dynamics damping="3.0" friction="5.0" />
+    <limit velocity="${wheel_velocity}" effort="${wheel_effort}"/>
   </joint>
 
   <transmission name="wheel_trans_br">
@@ -192,35 +191,27 @@ Stephen Brawner (brawner@gmail.com)
   <link
     name="wheel_fr">
     <inertial>
-      <origin xyz="-1.9E-10 2.1252E-10 -0.025064" />
-      <mass value="0.26661" />
+      <origin xyz="0 0 0.025" />
+      <mass value="${wheel_mass}" />
       <inertia
-        ixx="8.0546E-05"
-        ixy="-4.5866E-15"
-        ixz="7.6917E-14"
-        iyy="8.0546E-05"
-        iyz="9.6011E-15"
-        izz="9.3196E-05" />
+        ixx="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        iyy="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        izz="${wheel_mass * (wheel_radius **2) / 2}"
+        ixy="0" ixz="0" iyz="0" />
     </inertial>
     <visual>
-      <!-- <origin
-        xyz="0 0 0"
-        rpy="0 0 0" /> -->
       <geometry>
         <mesh
           filename="package://mirte_master_description/meshes/wheel_fr.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
-
     <collision>
       <origin xyz="0 0 -0.025" />
       <geometry>
-        <cylinder radius="0.053" length="0.055" />
+        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
       </geometry>
     </collision>
   </link>
@@ -232,8 +223,9 @@ Stephen Brawner (brawner@gmail.com)
       rpy="1.5708 0 -1.5708" />
     <parent link="base_link" />
     <child link="wheel_fr" />
-    <axis xyz="0 0 1" />
+    <axis xyz="0 0 -1" />
     <dynamics damping="3.0" friction="5.0" />
+    <limit velocity="${wheel_velocity}" effort="${wheel_effort}"/>
   </joint>
 
   <transmission name="wheel_trans_fr">
@@ -249,35 +241,27 @@ Stephen Brawner (brawner@gmail.com)
   <link
     name="wheel_bl">
     <inertial>
-      <origin xyz="-1.9E-10 2.1252E-10 0.024936" />
-      <mass
-        value="0.26661" />
+      <origin xyz="0 0 0.025" />
+      <mass value="${wheel_mass}" />
       <inertia
-        ixx="8.0546E-05"
-        ixy="-4.5761E-15"
-        ixz="7.6918E-14"
-        iyy="8.0546E-05"
-        iyz="9.5856E-15"
-        izz="9.3196E-05" />
+        ixx="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        iyy="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        izz="${wheel_mass * (wheel_radius **2) / 2}"
+        ixy="0" ixz="0" iyz="0" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://mirte_master_description/meshes/wheel_bl.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.79216 0.81961 0.93333 1" />
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
     <collision>
       <origin xyz="0 0 0.025" />
       <geometry>
-        <cylinder radius="0.053" length="0.055" />
+        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
       </geometry>
     </collision>
   </link>
@@ -291,6 +275,7 @@ Stephen Brawner (brawner@gmail.com)
     <child link="wheel_bl" />
     <axis xyz="0 0 -1" />
     <dynamics damping="3.0" friction="5.0" />
+    <limit velocity="${wheel_velocity}" effort="${wheel_effort}"/>
   </joint>
 
   <transmission name="wheel_trans_bl">
@@ -356,218 +341,221 @@ Stephen Brawner (brawner@gmail.com)
     </joint>
   </xacro:if>
 
-  <link
-    name="ultrasonic_fl">
-    <inertial>
+  <xacro:if value="$(arg sonar_enable)">
+    <link
+      name="ultrasonic_fl">
+      <inertial>
+        <origin
+          xyz="-4.30733527062924E-05 0.00367564883489804 -6.99136578631437E-05"
+          rpy="0 0 0" />
+        <mass
+          value="0.00383513951999247" />
+        <inertia
+          ixx="1.59365628586768E-07"
+          ixy="-8.54250314742639E-10"
+          ixz="-3.40905422018191E-09"
+          iyy="7.68751523460336E-07"
+          iyz="2.65062440645508E-09"
+          izz="7.26221149125628E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/ultrasonic_fl.STL" />
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/ultrasonic_fl.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint
+      name="ultrasonic_joint_fl"
+      type="fixed">
       <origin
-        xyz="-4.30733527062924E-05 0.00367564883489804 -6.99136578631437E-05"
-        rpy="0 0 0" />
-      <mass
-        value="0.00383513951999247" />
-      <inertia
-        ixx="1.59365628586768E-07"
-        ixy="-8.54250314742639E-10"
-        ixz="-3.40905422018191E-09"
-        iyy="7.68751523460336E-07"
-        iyz="2.65062440645508E-09"
-        izz="7.26221149125628E-07" />
-    </inertial>
-    <visual>
+        xyz="0.05297775289576 -0.120282421780502 -0.031"
+        rpy="3.14159265358979 0 0.296705972839036" />
+      <parent
+        link="base_link" />
+      <child
+        link="ultrasonic_fl" />
+      <axis
+        xyz="0 0 0" />
+    </joint>
+    <link
+      name="ultrasonic_fr">
+      <inertial>
+        <origin
+          xyz="-4.30733527063201E-05 0.00367564883489799 -6.99136578631784E-05"
+          rpy="0 0 0" />
+        <mass
+          value="0.00383513951999245" />
+        <inertia
+          ixx="1.59365628586767E-07"
+          ixy="-8.54250314742507E-10"
+          ixz="-3.40905422018182E-09"
+          iyy="7.6875152346034E-07"
+          iyz="2.65062440645522E-09"
+          izz="7.26221149125632E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/ultrasonic_fr.STL" />
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/ultrasonic_fr.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint
+      name="ultrasonic_joint_fr"
+      type="fixed">
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/ultrasonic_fl.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
-    <collision>
+        xyz="-0.05297775289576 -0.120282421780502 -0.031"
+        rpy="3.14159265358979 0 -0.296705972839036" />
+      <parent
+        link="base_link" />
+      <child
+        link="ultrasonic_fr" />
+      <axis
+        xyz="0 0 0" />
+    </joint>
+    <link
+      name="ultrasonic_bl">
+      <inertial>
+        <origin
+          xyz="-4.30733527062716E-05 0.00367564883489804 -6.9913657863175E-05"
+          rpy="0 0 0" />
+        <mass
+          value="0.00383513951999244" />
+        <inertia
+          ixx="1.59365628586767E-07"
+          ixy="-8.54250314742494E-10"
+          ixz="-3.40905422018206E-09"
+          iyy="7.68751523460339E-07"
+          iyz="2.6506244064553E-09"
+          izz="7.26221149125632E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/ultrasonic_bl.STL" />
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/ultrasonic_bl.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint
+      name="ultrasonic_joint_bl"
+      type="fixed">
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/ultrasonic_fl.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="ultrasonic_joint_fl"
-    type="fixed">
-    <origin
-      xyz="0.05297775289576 -0.120282421780502 -0.031"
-      rpy="3.14159265358979 0 0.296705972839036" />
-    <parent
-      link="base_link" />
-    <child
-      link="ultrasonic_fl" />
-    <axis
-      xyz="0 0 0" />
-  </joint>
-  <link
-    name="ultrasonic_fr">
-    <inertial>
+        xyz="0.0565606470918482 0.119187021096338 -0.031"
+        rpy="3.14159265358979 0 2.84488668075076" />
+      <parent
+        link="base_link" />
+      <child
+        link="ultrasonic_bl" />
+      <axis
+        xyz="0 0 0" />
+    </joint>
+    <link
+      name="ultrasonic_br">
+      <inertial>
+        <origin
+          xyz="-4.30733527062716E-05 0.00367564883489802 -6.99136578631541E-05"
+          rpy="0 0 0" />
+        <mass
+          value="0.00383513951999245" />
+        <inertia
+          ixx="1.59365628586768E-07"
+          ixy="-8.54250314743155E-10"
+          ixz="-3.40905422018173E-09"
+          iyy="7.68751523460337E-07"
+          iyz="2.65062440645518E-09"
+          izz="7.26221149125628E-07" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/ultrasonic_br.STL" />
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/ultrasonic_br.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint
+      name="ultrasonic_joint_br"
+      type="fixed">
       <origin
-        xyz="-4.30733527063201E-05 0.00367564883489799 -6.99136578631784E-05"
-        rpy="0 0 0" />
-      <mass
-        value="0.00383513951999245" />
-      <inertia
-        ixx="1.59365628586767E-07"
-        ixy="-8.54250314742507E-10"
-        ixz="-3.40905422018182E-09"
-        iyy="7.6875152346034E-07"
-        iyz="2.65062440645522E-09"
-        izz="7.26221149125632E-07" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/ultrasonic_fr.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/ultrasonic_fr.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="ultrasonic_joint_fr"
-    type="fixed">
-    <origin
-      xyz="-0.05297775289576 -0.120282421780502 -0.031"
-      rpy="3.14159265358979 0 -0.296705972839036" />
-    <parent
-      link="base_link" />
-    <child
-      link="ultrasonic_fr" />
-    <axis
-      xyz="0 0 0" />
-  </joint>
-  <link
-    name="ultrasonic_bl">
-    <inertial>
-      <origin
-        xyz="-4.30733527062716E-05 0.00367564883489804 -6.9913657863175E-05"
-        rpy="0 0 0" />
-      <mass
-        value="0.00383513951999244" />
-      <inertia
-        ixx="1.59365628586767E-07"
-        ixy="-8.54250314742494E-10"
-        ixz="-3.40905422018206E-09"
-        iyy="7.68751523460339E-07"
-        iyz="2.6506244064553E-09"
-        izz="7.26221149125632E-07" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/ultrasonic_bl.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/ultrasonic_bl.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="ultrasonic_joint_bl"
-    type="fixed">
-    <origin
-      xyz="0.0565606470918482 0.119187021096338 -0.031"
-      rpy="3.14159265358979 0 2.84488668075076" />
-    <parent
-      link="base_link" />
-    <child
-      link="ultrasonic_bl" />
-    <axis
-      xyz="0 0 0" />
-  </joint>
-  <link
-    name="ultrasonic_br">
-    <inertial>
-      <origin
-        xyz="-4.30733527062716E-05 0.00367564883489802 -6.99136578631541E-05"
-        rpy="0 0 0" />
-      <mass
-        value="0.00383513951999245" />
-      <inertia
-        ixx="1.59365628586768E-07"
-        ixy="-8.54250314743155E-10"
-        ixz="-3.40905422018173E-09"
-        iyy="7.68751523460337E-07"
-        iyz="2.65062440645518E-09"
-        izz="7.26221149125628E-07" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/ultrasonic_br.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/ultrasonic_br.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="ultrasonic_joint_br"
-    type="fixed">
-    <origin
-      xyz="-0.0565606470918482 0.119187021096338 -0.031"
-      rpy="3.14159265358979 0 -2.84488668075076" />
-    <parent
-      link="base_link" />
-    <child
-      link="ultrasonic_br" />
-    <axis
-      xyz="0 0 0" />
-  </joint>
+        xyz="-0.0565606470918482 0.119187021096338 -0.031"
+        rpy="3.14159265358979 0 -2.84488668075076" />
+      <parent
+        link="base_link" />
+      <child
+        link="ultrasonic_br" />
+      <axis
+        xyz="0 0 0" />
+    </joint>
+  </xacro:if>
+
   <!-- <link
     name="depth_cam">
     <inertial>
@@ -622,59 +610,61 @@ a
     <axis
       xyz="0 0 0" />
   </joint> -->
-  <link
-    name="lidar">
-    <inertial>
+  <xacro:if value="$(arg lidar_enable)">
+    <link
+      name="lidar">
+      <inertial>
+        <origin
+          xyz="-3.97749846947626E-10 0.0118651639742243 -9.54386087724301E-05"
+          rpy="0 0 0" />
+        <mass
+          value="0.100511981883415" />
+        <inertia
+          ixx="3.39518063996325E-05"
+          ixy="-1.6211120950128E-12"
+          ixz="-2.92284267016588E-13"
+          iyy="4.1935853096105E-05"
+          iyz="1.1815579647801E-07"
+          izz="3.44778101670497E-05" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/lidar.STL" />
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="0.501960784313725 0.501960784313725 0.501960784313725 1" />
+        </material>
+      </visual>
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/lidar.STL" />
+        </geometry>
+      </collision>
+    </link>
+    <joint
+      name="lidar_joint"
+      type="fixed">
       <origin
-        xyz="-3.97749846947626E-10 0.0118651639742243 -9.54386087724301E-05"
-        rpy="0 0 0" />
-      <mass
-        value="0.100511981883415" />
-      <inertia
-        ixx="3.39518063996325E-05"
-        ixy="-1.6211120950128E-12"
-        ixz="-2.92284267016588E-13"
-        iyy="4.1935853096105E-05"
-        iyz="1.1815579647801E-07"
-        izz="3.44778101670497E-05" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/lidar.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.501960784313725 0.501960784313725 0.501960784313725 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/lidar.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="lidar_joint"
-    type="fixed">
-    <origin
-      xyz="0 -0.1005 0.0072113248654052"
-      rpy="-1.5707963267949 0 -1.5707963267949" />
-    <parent
-      link="base_link" />
-    <child
-      link="lidar" />
-    <axis
-      xyz="0 0 0" />
-  </joint>
+        xyz="0 -0.1005 0.0072113248654052"
+        rpy="-1.5707963267949 0 -1.5707963267949" />
+      <parent
+        link="base_link" />
+      <child
+        link="lidar" />
+      <axis
+        xyz="0 0 0" />
+    </joint>
+  </xacro:if>
 
   <xacro:if value="$(arg screen_enable)">
     <link
