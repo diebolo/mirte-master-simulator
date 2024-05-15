@@ -15,7 +15,7 @@
   <arg name="arm_enable" default="False" />
   <arg name="screen_enable" default="False" />
   <arg name="front_camera_enable" default="False" />
-  <arg name="sonar_enable" default="False" />
+  <arg name="sonar_enable" default="True" />
   <arg name="lidar_enable" default="False" />
   <arg name="depth_camera_enable" default="True" />
 
@@ -27,7 +27,7 @@
     <arg name="sonar_enable" value="$(arg sonar_enable)" />
     <arg name="lidar_enable" value="$(arg lidar_enable)" />
     <arg name="depth_camera_enable" value="$(arg depth_camera_enable)" />
-    
+
     <arg name="kinematic_only" value="$(arg kinematic_only)" />
   </include>
 
@@ -53,7 +53,8 @@
     </rosparam>
   </group>
 
-  <!-- If simulating the main body only as kinematic, we use an derivative/damper to get some physical limits back -->
+  <!-- If simulating the main body only as kinematic, we use an derivative/damper to get some
+  physical limits back -->
   <group if="$(arg kinematic_only)">
     <rosparam param="/gazebo_ros_control/pid_gains">
       wheel_joint_fr:
@@ -88,4 +89,11 @@
     name="gazebo_mecanum_plugin_pid" output="screen">
     <rosparam file="$(find mirte_master_description)/param/pid_parameter.yaml" command="load" />
   </node>
+
+  <group if="$(arg sonar_enable)">
+    <node pkg="mirte_gazebo" type="convert_sonar" name="map_sonar_left_front" args="left_front" />
+    <node pkg="mirte_gazebo" type="convert_sonar" name="map_sonar_right_front" args="right_front" />
+    <node pkg="mirte_gazebo" type="convert_sonar" name="map_sonar_left_back" args="left_back" />
+    <node pkg="mirte_gazebo" type="convert_sonar" name="map_sonar_right_back" args="right_back" />
+  </group>
 </launch>

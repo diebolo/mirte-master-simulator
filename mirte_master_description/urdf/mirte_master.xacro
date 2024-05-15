@@ -10,12 +10,14 @@ Stephen Brawner (brawner@gmail.com)
   <xacro:arg name="arm_enable" default="False" />
   <xacro:arg name="screen_enable" default="False" />
   <xacro:arg name="front_camera_enable" default="False" />
-  <xacro:arg name="sonar_enable" default="False" />
+  <xacro:arg name="sonar_enable" default="True" />
   <xacro:arg name="lidar_enable" default="False" />
   <xacro:arg name="depth_camera_enable" default="False" />
 
   <!-- Disable momentum on the main body, makes the simulation behave slightly nicer, at the cost of
   inaccuracies (It is better toggle this when the robot hits the ground)-->
+  <!-- BETTER IDEA: use http://wiki.ros.org/timed_roslaunch to launch a custom nodes which sets the
+  link to kinematic  -->
   <xacro:arg name="kinematic_only" default="False" />
 
   <xacro:property name="wheel_radius" value="0.053" />
@@ -26,6 +28,11 @@ Stephen Brawner (brawner@gmail.com)
   <xacro:property name="wheel_effort" value="5" /> <!-- 5 -->
 
   <xacro:property name="base_mass" value="4.0815" /> <!-- 3.0815 -->
+
+  <!-- Used for sonar by mirte-gazebo -->
+  <material name="blue">
+    <color rgba="0.203125 0.23828125 0.28515625 1.0" />
+  </material>
 
   <!-- Bring in simulation data for Gazebo. -->
   <xacro:include filename="$(find mirte_master_description)/urdf/mirte_master_base.gazebo.xacro" />
@@ -75,6 +82,45 @@ Stephen Brawner (brawner@gmail.com)
         <color rgba="0.52941 0.54902 0.54902 1" />
       </material>
     </visual>
+
+    <!-- Add visuals for ultra sonic sensors-->
+    <visual>
+      <origin
+        xyz="0.05297775289576 -0.120282421780502 -0.031"
+        rpy="3.14159265358979 0 0.296705972839036" />
+      <geometry>
+        <mesh filename="package://mirte_master_description/meshes/ultrasonic_fl.STL" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <visual>
+      <origin
+        xyz="-0.05297775289576 -0.120282421780502 -0.031"
+        rpy="3.14159265358979 0 -0.296705972839036" />
+      <geometry>
+        <mesh filename="package://mirte_master_description/meshes/ultrasonic_fr.STL" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <visual>
+      <origin
+        xyz="0.0565606470918482 0.119187021096338 -0.031"
+        rpy="3.14159265358979 0 2.84488668075076" />
+      <geometry>
+        <mesh filename="package://mirte_master_description/meshes/ultrasonic_bl.STL" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <visual>
+      <origin
+        xyz="-0.0565606470918482 0.119187021096338 -0.031"
+        rpy="3.14159265358979 0 -2.84488668075076" />
+      <geometry>
+        <mesh filename="package://mirte_master_description/meshes/ultrasonic_br.STL" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
     <collision>
       <origin xyz="0 0 -0.03" />
       <geometry>
@@ -344,274 +390,44 @@ Stephen Brawner (brawner@gmail.com)
   </xacro:if>
 
   <xacro:if value="$(arg sonar_enable)">
-    <link
-      name="ultrasonic_fl">
-      <inertial>
-        <origin
-          xyz="-4.30733527062924E-05 0.00367564883489804 -6.99136578631437E-05"
-          rpy="0 0 0" />
-        <mass
-          value="0.00383513951999247" />
-        <inertia
-          ixx="1.59365628586768E-07"
-          ixy="-8.54250314742639E-10"
-          ixz="-3.40905422018191E-09"
-          iyy="7.68751523460336E-07"
-          iyz="2.65062440645508E-09"
-          izz="7.26221149125628E-07" />
-      </inertial>
-      <visual>
-        <origin
-          xyz="0 0 0"
-          rpy="0 0 0" />
-        <geometry>
-          <mesh
-            filename="package://mirte_master_description/meshes/ultrasonic_fl.STL" />
-        </geometry>
-        <material
-          name="">
-          <color
-            rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin
-          xyz="0 0 0"
-          rpy="0 0 0" />
-        <geometry>
-          <mesh
-            filename="package://mirte_master_description/meshes/ultrasonic_fl.STL" />
-        </geometry>
-      </collision>
-    </link>
-    <joint
-      name="ultrasonic_joint_fl"
-      type="fixed">
+    <xacro:include filename="$(find mirte_master_description)/urdf/ultrasonic.xacro" />
+
+
+    <joint name="chassis_base_joint" type="fixed">
+      <!-- Move the link so the rest will line up easier -->
+      <!-- <origin xyz="0 0 -0.031" /> -->
+      <parent link="base_link" />
+      <child link="link_chassis" />
+    </joint>
+
+
+    <link name="link_chassis" />
+    <xacro:ultrasonic_sensor name="left_front">
       <origin
         xyz="0.05297775289576 -0.120282421780502 -0.031"
-        rpy="3.14159265358979 0 0.296705972839036" />
-      <parent
-        link="base_link" />
-      <child
-        link="ultrasonic_fl" />
-      <axis
-        xyz="0 0 0" />
-    </joint>
-    <link
-      name="ultrasonic_fr">
-      <inertial>
-        <origin
-          xyz="-4.30733527063201E-05 0.00367564883489799 -6.99136578631784E-05"
-          rpy="0 0 0" />
-        <mass
-          value="0.00383513951999245" />
-        <inertia
-          ixx="1.59365628586767E-07"
-          ixy="-8.54250314742507E-10"
-          ixz="-3.40905422018182E-09"
-          iyy="7.6875152346034E-07"
-          iyz="2.65062440645522E-09"
-          izz="7.26221149125632E-07" />
-      </inertial>
-      <visual>
-        <origin
-          xyz="0 0 0"
-          rpy="0 0 0" />
-        <geometry>
-          <mesh
-            filename="package://mirte_master_description/meshes/ultrasonic_fr.STL" />
-        </geometry>
-        <material
-          name="">
-          <color
-            rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin
-          xyz="0 0 0"
-          rpy="0 0 0" />
-        <geometry>
-          <mesh
-            filename="package://mirte_master_description/meshes/ultrasonic_fr.STL" />
-        </geometry>
-      </collision>
-    </link>
-    <joint
-      name="ultrasonic_joint_fr"
-      type="fixed">
+        rpy="0 0 ${-pi/2+0.296705972839036}" />
+    </xacro:ultrasonic_sensor>
+
+    <xacro:ultrasonic_sensor name="right_front">
       <origin
         xyz="-0.05297775289576 -0.120282421780502 -0.031"
-        rpy="3.14159265358979 0 -0.296705972839036" />
-      <parent
-        link="base_link" />
-      <child
-        link="ultrasonic_fr" />
-      <axis
-        xyz="0 0 0" />
-    </joint>
-    <link
-      name="ultrasonic_bl">
-      <inertial>
-        <origin
-          xyz="-4.30733527062716E-05 0.00367564883489804 -6.9913657863175E-05"
-          rpy="0 0 0" />
-        <mass
-          value="0.00383513951999244" />
-        <inertia
-          ixx="1.59365628586767E-07"
-          ixy="-8.54250314742494E-10"
-          ixz="-3.40905422018206E-09"
-          iyy="7.68751523460339E-07"
-          iyz="2.6506244064553E-09"
-          izz="7.26221149125632E-07" />
-      </inertial>
-      <visual>
-        <origin
-          xyz="0 0 0"
-          rpy="0 0 0" />
-        <geometry>
-          <mesh
-            filename="package://mirte_master_description/meshes/ultrasonic_bl.STL" />
-        </geometry>
-        <material
-          name="">
-          <color
-            rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin
-          xyz="0 0 0"
-          rpy="0 0 0" />
-        <geometry>
-          <mesh
-            filename="package://mirte_master_description/meshes/ultrasonic_bl.STL" />
-        </geometry>
-      </collision>
-    </link>
-    <joint
-      name="ultrasonic_joint_bl"
-      type="fixed">
+        rpy="0 0 ${-pi/2-0.296705972839036}" />
+    </xacro:ultrasonic_sensor>
+
+    <xacro:ultrasonic_sensor name="left_back">
       <origin
         xyz="0.0565606470918482 0.119187021096338 -0.031"
-        rpy="3.14159265358979 0 2.84488668075076" />
-      <parent
-        link="base_link" />
-      <child
-        link="ultrasonic_bl" />
-      <axis
-        xyz="0 0 0" />
-    </joint>
-    <link
-      name="ultrasonic_br">
-      <inertial>
-        <origin
-          xyz="-4.30733527062716E-05 0.00367564883489802 -6.99136578631541E-05"
-          rpy="0 0 0" />
-        <mass
-          value="0.00383513951999245" />
-        <inertia
-          ixx="1.59365628586768E-07"
-          ixy="-8.54250314743155E-10"
-          ixz="-3.40905422018173E-09"
-          iyy="7.68751523460337E-07"
-          iyz="2.65062440645518E-09"
-          izz="7.26221149125628E-07" />
-      </inertial>
-      <visual>
-        <origin
-          xyz="0 0 0"
-          rpy="0 0 0" />
-        <geometry>
-          <mesh
-            filename="package://mirte_master_description/meshes/ultrasonic_br.STL" />
-        </geometry>
-        <material
-          name="">
-          <color
-            rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin
-          xyz="0 0 0"
-          rpy="0 0 0" />
-        <geometry>
-          <mesh
-            filename="package://mirte_master_description/meshes/ultrasonic_br.STL" />
-        </geometry>
-      </collision>
-    </link>
-    <joint
-      name="ultrasonic_joint_br"
-      type="fixed">
+        rpy="0 0 ${-pi/2 + 2.84488668075076}" />
+    </xacro:ultrasonic_sensor>
+
+
+    <xacro:ultrasonic_sensor name="right_back">
       <origin
         xyz="-0.0565606470918482 0.119187021096338 -0.031"
-        rpy="3.14159265358979 0 -2.84488668075076" />
-      <parent
-        link="base_link" />
-      <child
-        link="ultrasonic_br" />
-      <axis
-        xyz="0 0 0" />
-    </joint>
+        rpy="0 0 ${-pi/2 -2.84488668075076}" />
+    </xacro:ultrasonic_sensor>
   </xacro:if>
 
-  <!-- <link
-    name="depth_cam">
-    <inertial>
-      <origin
-        xyz="0.00132191552494907 -0.000392007210431269 -0.0222605569616031"
-        rpy="0 0 0" />
-      <mass
-        value="0.188133920196831" />
-      <inerti  <xacro:arg name="flag_enable" default="False" />
-a
-        ixx="6.91459455879894E-05"
-        ixy="2.54332859259088E-06"
-        ixz="1.91366261320705E-05"
-        iyy="0.000449074814232154"
-        iyz="-4.27256155918481E-06"
-        izz="0.000408304016415217" />
-    </inertial>
-    <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/depth_cam.STL" />
-      </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.250980392156863 0.250980392156863 0.250980392156863 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/depth_cam.STL" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="depth_cam_joint"
-    type="fixed">
-    <origin
-      xyz="0 -0.146658788505756 0.0427000000000005"
-      rpy="1.5707963267949 0 0" />
-    <parent
-      link="base_link" />
-    <child
-      link="depth_cam" />
-    <axis
-      xyz="0 0 0" />
-  </joint> -->
   <xacro:if value="$(arg lidar_enable)">
     <link
       name="lidar">

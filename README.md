@@ -4,7 +4,9 @@
 This packaged is structered as the [mirte-gazebo](https://github.com/ArendJan/mirte-gazebo/tree/rsp) Repository.
 
 > **NOTES:**
-> Use `mirte_master_description` not `mirte_master_gazebo`
+> Use `mirte_master_description` for sum
+> `roslaunch mirte_master_description spawn_mirte_master.launch` can be used to spawn a Mirte Master in any Gazebo world.
+> (The current way of doing things only allows for 1 mirte due to naming collisions)
 
 
 ## Install
@@ -15,5 +17,5 @@ git submodule update --init --recursive
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
-## Setup notes
- - Use the patched version of [RidgeBack control](https://github.com/ArendJan/ridgeback/tree/melodic-devel)
+<!-- ## Setup notes -->
+ <!-- - Use the patched version of [RidgeBack control](https://github.com/ArendJan/ridgeback/tree/melodic-devel) -->
