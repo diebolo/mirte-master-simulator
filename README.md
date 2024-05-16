@@ -10,6 +10,9 @@ This packaged is structered as the [mirte-gazebo](https://github.com/ArendJan/mi
 > (The current way of doing things only allows for 1 mirte due to naming collisions)
 
 
+**WARNING:** **DO NOT export a `ROS_MASTER_URI`** to a mirte IP adress, while using Gazebo. this will cause it to hang. This is because gazebo will create its own 'world' and roscore instead of using a local mirte roscore.
+
+
 ### What doesn't work yet:
 - The arm
 - The front camera (not supplied for MDP 2024)
