@@ -43,6 +43,7 @@ git submodule update --init --recursive
 Also install [`ArendJan/mirte_ros_packages` (branch mirte_master)](https://github.com/ArendJan/mirte-ros-packages/tree/mirte-master), you may have already done that (You where asked to remove some packages we need)
 To do this:
 ```
+# be in catkin workspace root folder
 cd src
 git clone https://github.com/ArendJan/mirte-ros-packages.git -b mirte-master
 cd ..
