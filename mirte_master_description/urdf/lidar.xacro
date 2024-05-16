@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- File provided by  -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <link
     name="lidar_base">

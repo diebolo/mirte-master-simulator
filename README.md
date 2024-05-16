@@ -31,16 +31,21 @@ Clone this in your src folder of your catkin workspace.
 git clone git@github.com:diebolo/mirte-master-simulator.git
 cd mirte-master-simulator
 git submodule update --init --recursive
-rosdep install --from-paths src --ignore-src -r -y
 ```
+<!-- rosdep install --from-paths src --ignore-src -r -y -->
 Also install [`ArendJan/mirte_ros_packages` (branch mirte_master)](https://github.com/ArendJan/mirte-ros-packages/tree/mirte-master), you may have already done that (You where asked to remove some packages we need)
 To do this:
 ```
 cd src
 git clone https://github.com/ArendJan/mirte-ros-packages.git -b mirte-master
 cd ..
-catkin config --skiplist mirte_bringup # This package will always fail to build so ignore it.
-rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro noetic -y
+```
+<!-- catkin config --skiplist mirte_bringup # This package will always fail to build so ignore it. -->
+
+To finish the install do from the catkin workspace root:
+```
+rosdep install --from-paths src --ignore-packages-from-source --rosdistro noetic -y
+catkin build
 ```
 
 
