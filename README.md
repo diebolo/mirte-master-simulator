@@ -4,7 +4,8 @@
 This packaged is structered as the [mirte-gazebo](https://github.com/ArendJan/mirte-gazebo/tree/rsp) Repository.
 
 > **NOTES:**
-> Use `mirte_master_description` for sum
+> Use `mirte_master_description` for the simulation by launching `gazebo.launch`
+> 
 > `roslaunch mirte_master_description spawn_mirte_master.launch` can be used to spawn a Mirte Master in any Gazebo world.
 > (The current way of doing things only allows for 1 mirte due to naming collisions)
 
@@ -23,7 +24,10 @@ This packaged is structered as the [mirte-gazebo](https://github.com/ArendJan/mi
 
 ## Install
 Installing `catkintools` (provides `catkin build` as alternative to `catkin_make`) is helpful and recommended: (You may need to clean your workspace if you are migrating).
-`sudo apt install python3-catkin-tools`
+```
+sudo apt update && sudo apt upgrade # Make sure your system is up to date.
+sudo apt install python3-catkin-tools
+```
 If you use this from now on build with `catkin build`
 
 Clone this in your src folder of your catkin workspace.
@@ -44,9 +48,11 @@ cd ..
 
 To finish the install do from the catkin workspace root:
 ```
-rosdep install --from-paths src --ignore-packages-from-source --rosdistro noetic -y
+rosdep install --from-paths src --ignore-src -r -y
+# It will says astra_camera not found, which is fine
 catkin build
 ```
+<!-- rosdep install --from-paths src --ignore-packages-from-source --rosdistro noetic -y -->
 
 
 <!-- ## Setup notes -->
