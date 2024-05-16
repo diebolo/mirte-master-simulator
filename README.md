@@ -33,11 +33,15 @@ sudo apt install python3-catkin-tools
 ```
 If you use this from now on build with `catkin build`
 
-Clone this in your src folder of your catkin workspace.
+Clone this in the root folder of your catkin workspace.
 ```
+# Create the catkin_ws if it has not been created yet or use a preexisitng one
+# mkdir catkin_ws/src; cd catkin_ws
+cd src
 git clone git@github.com:diebolo/mirte-master-simulator.git
 cd mirte-master-simulator
 git submodule update --init --recursive
+cd ../.. # Go back to the workspace root
 ```
 <!-- rosdep install --from-paths src --ignore-src -r -y -->
 Also install [`ArendJan/mirte_ros_packages` (branch mirte_master)](https://github.com/ArendJan/mirte-ros-packages/tree/mirte-master), you may have already done that (You where asked to remove some packages we need)
