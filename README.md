@@ -10,12 +10,27 @@ This packaged is structered as the [mirte-gazebo](https://github.com/ArendJan/mi
 
 
 ## Install
+Installing `catkintools` (provides `catkin build` as alternative to `catkin_make`) is helpful and recommended: (You may need to clean your workspace if you are migrating).
+`sudo apt install python3-catkin-tools`
+If you use this from now on build with `catkin build`
+
+Clone this in your src folder of your catkin workspace.
 ```
 git clone git@github.com:diebolo/mirte-master-simulator.git
 cd mirte-master-simulator
 git submodule update --init --recursive
 rosdep install --from-paths src --ignore-src -r -y
 ```
+Also install [`ArendJan/mirte_ros_packages` (branch mirte_master)](https://github.com/ArendJan/mirte-ros-packages/tree/mirte-master), you may have already done that (You where asked to remove some packages we need)
+To do this:
+```
+cd src
+git clone https://github.com/ArendJan/mirte-ros-packages.git -b mirte-master
+cd ..
+catkin config --skiplist mirte_bringup # This package will always fail to build so ignore it.
+rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro noetic -y
+```
+
 
 <!-- ## Setup notes -->
  <!-- - Use the patched version of [RidgeBack control](https://github.com/ArendJan/ridgeback/tree/melodic-devel) -->
