@@ -4,7 +4,7 @@
   <arg name="screen_enable" default="False" />
   <arg name="front_camera_enable" default="False" />
   <arg name="sonar_enable" default="True" />
-  <arg name="lidar_enable" default="False" />
+  <arg name="lidar_enable" default="True" />
   <arg name="depth_camera_enable" default="True" />
 
   <include file="$(find mirte_master_description)/launch/description.launch">

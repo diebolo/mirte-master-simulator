@@ -9,6 +9,18 @@ This packaged is structered as the [mirte-gazebo](https://github.com/ArendJan/mi
 > (The current way of doing things only allows for 1 mirte due to naming collisions)
 
 
+### What doesn't work yet:
+- The arm
+- The front camera (not supplied for MDP 2024)
+- IMU
+- Battery
+
+### What does work
+- Flag  (Optional to enable)
+- LiDAR
+- Depthcamera
+- Sonar
+
 ## Install
 Installing `catkintools` (provides `catkin build` as alternative to `catkin_make`) is helpful and recommended: (You may need to clean your workspace if you are migrating).
 `sudo apt install python3-catkin-tools`

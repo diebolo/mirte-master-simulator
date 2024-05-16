@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- File provided by  -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <link
+    name="lidar_base">
+    <inertial>
+      <origin
+        xyz="-3.97749846947626E-10 0.0118651639742243 -9.54386087724301E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.100511981883415" />
+      <inertia
+        ixx="3.39518063996325E-05"
+        ixy="-1.6211120950128E-12"
+        ixz="-2.92284267016588E-13"
+        iyy="4.1935853096105E-05"
+        iyz="1.1815579647801E-07"
+        izz="3.44778101670497E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/lidar.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.501960784313725 0.501960784313725 0.501960784313725 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/lidar.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lidar_base_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.1005 0.0072113248654052"
+      rpy="-1.5707963267949 0 -1.5707963267949" />
+    <parent
+      link="base_link" />
+    <child
+      link="lidar_base" />
+    <axis xyz="0 0 0" />
+  </joint>
+
+  <link name="lidar_link"></link>
+
+  <joint name="lidar_joint" type="fixed">
+    <origin rpy="${radians(90)} ${radians(0)} 0"/>
+    <parent link="lidar_base"/>
+    <child link="lidar_link"/>
+    <axis xyz="0 0 0" />
+  </joint>
+    <gazebo reference="lidar_link">
+        <sensor type="ray" name="lidar">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>500</samples>
+                        <resolution>1</resolution>
+                        <min_angle>${-pi}</min_angle>
+                        <max_angle>${pi}</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.05</min>
+                    <max>10.0</max> <!-- Could be anything between 10-12 depeding on conditions according to the spec sheet-->
+                    <resolution>0.015</resolution>
+                </range>
+                <noise>
+                    <type>gaussian</type>
+                    <!-- Noise parameters based on published spec for Hokuyo laser
+                achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+                stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+                reading. -->
+                    <mean>0.0</mean>
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+            <plugin name="lidar" filename="libgazebo_ros_laser.so">
+                <topicName>/scan</topicName>
+                <frameName>lidar_link</frameName>
+            </plugin>
+        </sensor>
+    </gazebo>
+</robot>

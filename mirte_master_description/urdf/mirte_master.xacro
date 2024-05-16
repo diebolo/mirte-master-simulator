@@ -11,7 +11,7 @@ Stephen Brawner (brawner@gmail.com)
   <xacro:arg name="screen_enable" default="False" />
   <xacro:arg name="front_camera_enable" default="False" />
   <xacro:arg name="sonar_enable" default="True" />
-  <xacro:arg name="lidar_enable" default="False" />
+  <xacro:arg name="lidar_enable" default="True" />
   <xacro:arg name="depth_camera_enable" default="False" />
 
   <!-- Disable momentum on the main body, makes the simulation behave slightly nicer, at the cost of
@@ -429,59 +429,7 @@ Stephen Brawner (brawner@gmail.com)
   </xacro:if>
 
   <xacro:if value="$(arg lidar_enable)">
-    <link
-      name="lidar">
-      <inertial>
-        <origin
-          xyz="-3.97749846947626E-10 0.0118651639742243 -9.54386087724301E-05"
-          rpy="0 0 0" />
-        <mass
-          value="0.100511981883415" />
-        <inertia
-          ixx="3.39518063996325E-05"
-          ixy="-1.6211120950128E-12"
-          ixz="-2.92284267016588E-13"
-          iyy="4.1935853096105E-05"
-          iyz="1.1815579647801E-07"
-          izz="3.44778101670497E-05" />
-      </inertial>
-      <visual>
-        <origin
-          xyz="0 0 0"
-          rpy="0 0 0" />
-        <geometry>
-          <mesh
-            filename="package://mirte_master_description/meshes/lidar.STL" />
-        </geometry>
-        <material
-          name="">
-          <color
-            rgba="0.501960784313725 0.501960784313725 0.501960784313725 1" />
-        </material>
-      </visual>
-      <collision>
-        <origin
-          xyz="0 0 0"
-          rpy="0 0 0" />
-        <geometry>
-          <mesh
-            filename="package://mirte_master_description/meshes/lidar.STL" />
-        </geometry>
-      </collision>
-    </link>
-    <joint
-      name="lidar_joint"
-      type="fixed">
-      <origin
-        xyz="0 -0.1005 0.0072113248654052"
-        rpy="-1.5707963267949 0 -1.5707963267949" />
-      <parent
-        link="base_link" />
-      <child
-        link="lidar" />
-      <axis
-        xyz="0 0 0" />
-    </joint>
+    <xacro:include filename="$(find mirte_master_description)/urdf/lidar.xacro"/>
   </xacro:if>
 
   <xacro:if value="$(arg screen_enable)">
