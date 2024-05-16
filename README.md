@@ -62,3 +62,8 @@ catkin build # remove everything except the src folder
 
 <!-- ## Setup notes -->
  <!-- - Use the patched version of [RidgeBack control](https://github.com/ArendJan/ridgeback/tree/melodic-devel) -->
+
+# Contributers
+- Jasper van Brakel (Integration) | Group 10
+- Jelle Woudstra (LiDAR example)
+- Xavier ... (Some intial driving)
