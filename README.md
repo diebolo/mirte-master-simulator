@@ -54,7 +54,8 @@ To finish the install do from the catkin workspace root:
 ```
 rosdep install --from-paths src --ignore-src -r -y
 # It will says astra_camera not found, which is fine
-catkin build
+catkin config --skiplist mirte_bringup
+catkin build # remove everything except the src folder
 ```
 <!-- rosdep install --from-paths src --ignore-packages-from-source --rosdistro noetic -y -->
 
