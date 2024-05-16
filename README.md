@@ -65,5 +65,6 @@ catkin build # remove everything except the src folder
 
 # Contributers
 - Jasper van Brakel (Integration) | Group 10
+- Tyler Olson (Exporting the SOLID WORKS to URDF (with manual frame allignment)
 - Jelle Woudstra (LiDAR example)
 - Xavier ... (Some intial driving)
