@@ -20,7 +20,7 @@ Stephen Brawner (brawner@gmail.com)
   link to kinematic  -->
   <xacro:arg name="kinematic_only" default="False" />
 
-  <xacro:property name="wheel_radius" value="0.053" />
+  <xacro:property name="wheel_radius" value="0.050" />
   <xacro:property name="wheel_length" value="0.055" />
   <xacro:property name="wheel_mass" value="0.26661" />
 
@@ -131,6 +131,20 @@ Stephen Brawner (brawner@gmail.com)
       <origin xyz="0 0.05 0.045" />
       <geometry>
         <box size="0.18 0.16 0.05" />
+      </geometry>
+    </collision>
+
+    <collision>
+      <origin xyz="-0.062156 -0.002558 0.0125" rpy="0 0 ${radians(32.5)}" />
+      <geometry>
+        <box size="0.013 0.03 0.025" />
+      </geometry>
+    </collision>
+
+    <collision>
+      <origin xyz="0.064835 0.001664 0.0125" rpy="0 0 ${radians(-32.5)}" />
+      <geometry>
+        <box size="0.013 0.04 0.025" />
       </geometry>
     </collision>
   </link>
@@ -429,7 +443,7 @@ Stephen Brawner (brawner@gmail.com)
   </xacro:if>
 
   <xacro:if value="$(arg lidar_enable)">
-    <xacro:include filename="$(find mirte_master_description)/urdf/lidar.xacro"/>
+    <xacro:include filename="$(find mirte_master_description)/urdf/lidar.xacro" />
   </xacro:if>
 
   <xacro:if value="$(arg screen_enable)">
