@@ -6,7 +6,7 @@
 
     <plugin name="mirte_master_mechanum_drive" filename="libgazebo_ros_mecanum_drive.so">
       <commandTopic>mobile_base_controller/cmd_vel_corrected</commandTopic>
-      <odometryTopic>odom</odometryTopic>
+      <odometryTopic>mobile_base_controller/odom</odometryTopic>
       <odometryFrame>odom</odometryFrame>
       <robotBaseFrame>base_footprint</robotBaseFrame>
       <LeftRear>wheel_joint_bl</LeftRear>
