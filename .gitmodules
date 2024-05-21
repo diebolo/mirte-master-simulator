@@ -1,10 +1,10 @@
 [submodule "gazebo_sensor_collection"]
 	path = gazebo_sensor_collection
 	url = git@github.com:SuperJappie08/gazebo_sensor_collection.git
-[submodule "gazebo_mecanum_plugins"]
-	path = gazebo_mecanum_plugins
-	url = git@github.com:qaz9517532846/gazebo_mecanum_plugins.git
 [submodule "mirte-gazebo"]
 	path = mirte-gazebo
 	url = git@github.com:ArendJan/mirte-gazebo.git
 	branch = rsp
+[submodule "ridgeback"]
+	path = ridgeback
+	url = git@github.com:ArendJan/ridgeback.git

@@ -13,21 +13,17 @@ Stephen Brawner (brawner@gmail.com)
   <xacro:arg name="sonar_enable" default="True" />
   <xacro:arg name="lidar_enable" default="True" />
   <xacro:arg name="depth_camera_enable" default="False" />
-
-  <!-- Disable momentum on the main body, makes the simulation behave slightly nicer, at the cost of
-  inaccuracies (It is better toggle this when the robot hits the ground)-->
-  <!-- BETTER IDEA: use http://wiki.ros.org/timed_roslaunch to launch a custom nodes which sets the
-  link to kinematic  -->
-  <xacro:arg name="kinematic_only" default="False" />
+  <xacro:arg name="imu_enable" default="True" />
 
   <xacro:property name="wheel_radius" value="0.050" />
   <xacro:property name="wheel_length" value="0.055" />
-  <xacro:property name="wheel_mass" value="0.26661" />
+  <xacro:property name="wheel_mass" value="2.15" /> <!-- 0.26661 -->
 
+  <!-- Currently unused -->
   <xacro:property name="wheel_velocity" value="8" /> <!-- Was 10 based on calc-->
-  <xacro:property name="wheel_effort" value="5" /> <!-- 5 -->
+  <xacro:property name="wheel_effort" value="5" />
 
-  <xacro:property name="base_mass" value="4.0815" /> <!-- 3.0815 -->
+  <xacro:property name="base_mass" value="5.0" /> <!-- 4.0815 --> <!-- 3.0815 -->
 
   <!-- Used for sonar by mirte-gazebo -->
   <material name="blue">
@@ -41,32 +37,36 @@ Stephen Brawner (brawner@gmail.com)
     filename="$(find gazebo_sensor_collection)/urdf/cameras/rgbd/orbbec_astra_pro_plus.urdf.xacro" />
 
   <xacro:if value="$(arg depth_camera_enable)">
-    <xacro:sensor_orbbec_astra_pro_plus name="camera" parent="base_link" color="black">
+    <xacro:sensor_orbbec_astra_pro_plus name="camera" parent="frame_link" color="black">
       <origin xyz="0.01 -0.146658788505756 0.0427" rpy="0 0 ${radians(-90)}" />
     </xacro:sensor_orbbec_astra_pro_plus>
   </xacro:if>
 
-  <link name="base_footprint"></link>
+  <xacro:if value="$(arg imu_enable)">
+    <link name="imu_link" />
 
-  <joint name="base_link_joint" type="fixed">
+    <joint name="imu_joint" type="fixed">
+      <origin xyz="0 0 0.10" />
+      <parent link="base_link" />
+      <child link="imu_link" />
+    </joint>
+  </xacro:if>
+
+  <link name="base_link" />
+
+  <joint name="frame_base_joint" type="fixed">
     <origin xyz="0 0 0.10" rpy="0 0 ${radians(90)}" />
-    <parent link="base_footprint" />
-    <child link="base_link" />
+    <parent link="base_link" />
+    <child link="frame_link" />
   </joint>
 
 
   <link
-    name="base_link">
+    name="frame_link">
     <inertial>
-      <origin xyz="-0.00024285 0.0082178 -0.0037661" />
+      <!-- Lower the center of mass for less woble as a result of accelaration -->
+      <origin xyz="-0.00024285 0.0082178 ${-0.0037661 - 0.04}" />
       <mass value="${base_mass}" />
-      <!-- <inertia
-        ixx="0.01245"
-        ixy="-6.0298E-07"
-        ixz="-7.3071E-07"
-        iyy="0.0091262"
-        iyz="-0.00017974"
-        izz="0.020706" /> -->
       <inertia
         ixx="${base_mass * (0.06**2 + 0.28**2) / 12}"
         iyy="${base_mass * (0.19**2 + 0.06**2) / 12}"
@@ -76,7 +76,7 @@ Stephen Brawner (brawner@gmail.com)
     <visual>
       <geometry>
         <mesh
-          filename="package://mirte_master_description/meshes/base_link.STL" />
+          filename="package://mirte_master_description/meshes/frame_link.STL" />
       </geometry>
       <material name="">
         <color rgba="0.52941 0.54902 0.54902 1" />
@@ -150,7 +150,7 @@ Stephen Brawner (brawner@gmail.com)
   </link>
 
   <link
-    name="wheel_fl">
+    name="wheel_left_front">
     <inertial>
       <origin xyz="0 0 0.025" />
       <mass value="${wheel_mass}" />
@@ -163,7 +163,7 @@ Stephen Brawner (brawner@gmail.com)
     <visual>
       <geometry>
         <mesh
-          filename="package://mirte_master_description/meshes/wheel_fl.STL" />
+          filename="package://mirte_master_description/meshes/wheel_left_front.STL" />
       </geometry>
       <material name="">
         <color rgba="0.79216 0.81961 0.93333 1" />
@@ -177,30 +177,31 @@ Stephen Brawner (brawner@gmail.com)
     </collision>
   </link>
   <joint
-    name="wheel_joint_fl"
+    name="wheel_left_front_joint"
     type="continuous">
     <origin
       xyz="0.153 -0.085 -0.0455"
       rpy="1.5708 0 -1.5708" />
-    <parent link="base_link" />
-    <child link="wheel_fl" />
+    <parent link="frame_link" />
+    <child link="wheel_left_front" />
     <axis xyz="0 0 -1" />
-    <dynamics damping="3.0" friction="5.0" />
-    <limit velocity="${wheel_velocity}" effort="${wheel_effort}" />
+    <!--<dynamics
+    damping="3.0" friction="5.0" />
+    <limit velocity="${wheel_velocity}" effort="${wheel_effort}" /> -->
   </joint>
 
-  <transmission name="wheel_trans_fl">
+  <transmission name="wheel_left_front_transmission">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="wheel_joint_fl">
+    <joint name="wheel_left_front_joint">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
-    <actuator name="wheel_act_fl">
+    <actuator name="wheel_left_front_actuator">
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
 
   <link
-    name="wheel_br">
+    name="wheel_left_rear">
     <inertial>
       <origin xyz="0 0 0.025" />
       <mass value="${wheel_mass}" />
@@ -213,113 +214,13 @@ Stephen Brawner (brawner@gmail.com)
     <visual>
       <geometry>
         <mesh
-          filename="package://mirte_master_description/meshes/wheel_br.STL" />
+          filename="package://mirte_master_description/meshes/wheel_left_rear.STL" />
       </geometry>
       <material name="">
         <color rgba="0.79216 0.81961 0.93333 1" />
       </material>
     </visual>
 
-    <collision>
-      <origin xyz="0 0 -0.025" />
-      <geometry>
-        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="wheel_joint_br"
-    type="continuous">
-    <origin
-      xyz="-0.153 0.085 -0.0455"
-      rpy="1.5708 0 -1.5708" />
-    <parent link="base_link" />
-    <child link="wheel_br" />
-    <axis xyz="0 0 -1" />
-    <dynamics damping="3.0" friction="5.0" />
-    <limit velocity="${wheel_velocity}" effort="${wheel_effort}" />
-  </joint>
-
-  <transmission name="wheel_trans_br">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="wheel_joint_br">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="wheel_act_br">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-
-  <link
-    name="wheel_fr">
-    <inertial>
-      <origin xyz="0 0 0.025" />
-      <mass value="${wheel_mass}" />
-      <inertia
-        ixx="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
-        iyy="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
-        izz="${wheel_mass * (wheel_radius **2) / 2}"
-        ixy="0" ixz="0" iyz="0" />
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/wheel_fr.STL" />
-      </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 -0.025" />
-      <geometry>
-        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
-      </geometry>
-    </collision>
-  </link>
-  <joint
-    name="wheel_joint_fr"
-    type="continuous">
-    <origin
-      xyz="-0.153 -0.085 -0.0455"
-      rpy="1.5708 0 -1.5708" />
-    <parent link="base_link" />
-    <child link="wheel_fr" />
-    <axis xyz="0 0 -1" />
-    <dynamics damping="3.0" friction="5.0" />
-    <limit velocity="${wheel_velocity}" effort="${wheel_effort}" />
-  </joint>
-
-  <transmission name="wheel_trans_fr">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="wheel_joint_fr">
-      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="wheel_act_fr">
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-
-  <link
-    name="wheel_bl">
-    <inertial>
-      <origin xyz="0 0 0.025" />
-      <mass value="${wheel_mass}" />
-      <inertia
-        ixx="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
-        iyy="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
-        izz="${wheel_mass * (wheel_radius **2) / 2}"
-        ixy="0" ixz="0" iyz="0" />
-    </inertial>
-    <visual>
-      <geometry>
-        <mesh
-          filename="package://mirte_master_description/meshes/wheel_bl.STL" />
-      </geometry>
-      <material name="">
-        <color rgba="0.79216 0.81961 0.93333 1" />
-      </material>
-    </visual>
     <collision>
       <origin xyz="0 0 0.025" />
       <geometry>
@@ -328,24 +229,126 @@ Stephen Brawner (brawner@gmail.com)
     </collision>
   </link>
   <joint
-    name="wheel_joint_bl"
+    name="wheel_left_rear_joint"
     type="continuous">
     <origin
       xyz="0.153 0.085 -0.0455"
       rpy="1.5708 0 -1.5708" />
-    <parent link="base_link" />
-    <child link="wheel_bl" />
+    <parent link="frame_link" />
+    <child link="wheel_left_rear" />
     <axis xyz="0 0 -1" />
-    <dynamics damping="3.0" friction="5.0" />
-    <limit velocity="${wheel_velocity}" effort="${wheel_effort}" />
+    <!-- <dynamics damping="3.0" friction="5.0" />
+  <limit velocity="${wheel_velocity}" effort="${wheel_effort}" />-->
   </joint>
 
-  <transmission name="wheel_trans_bl">
+  <transmission name="wheel_left_rear_transmission">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="wheel_joint_bl">
+    <joint name="wheel_left_rear_joint">
       <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
     </joint>
-    <actuator name="wheel_act_bl">
+    <actuator name="wheel_left_rear_actuator">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <link
+    name="wheel_right_front">
+    <inertial>
+      <origin xyz="0 0 -0.025" />
+      <mass value="${wheel_mass}" />
+      <inertia
+        ixx="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        iyy="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        izz="${wheel_mass * (wheel_radius **2) / 2}"
+        ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/wheel_right_front.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.025" />
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_right_front_joint"
+    type="continuous">
+    <origin
+      xyz="-0.153 -0.085 -0.0455"
+      rpy="1.5708 0 -1.5708" />
+    <parent link="frame_link" />
+    <child link="wheel_right_front" />
+    <axis xyz="0 0 -1" />
+    <!-- <dynamics damping="3.0" friction="5.0" />
+    <limit velocity="${wheel_velocity}" effort="${wheel_effort}" /> -->
+  </joint>
+
+  <transmission name="wheel_right_front_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_right_front_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_right_front_actuator">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <link
+    name="wheel_right_rear">
+    <inertial>
+      <origin xyz="0 0 -0.025" />
+      <mass value="${wheel_mass}" />
+      <inertia
+        ixx="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        iyy="${wheel_mass * (3 * (wheel_radius**2) + (wheel_length**2)) / 12}"
+        izz="${wheel_mass * (wheel_radius **2) / 2}"
+        ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh
+          filename="package://mirte_master_description/meshes/wheel_right_rear.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -0.025" />
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_length}" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="wheel_right_rear_joint"
+    type="continuous">
+    <origin
+      xyz="-0.153 0.085 -0.0455"
+      rpy="1.5708 0 -1.5708" />
+    <parent link="frame_link" />
+    <child link="wheel_right_rear" />
+    <axis xyz="0 0 -1" />
+    <!--<dynamics
+    damping="3.0" friction="5.0" />
+    <limit velocity="${wheel_velocity}" effort="${wheel_effort}" />-->
+  </joint>
+
+  <transmission name="wheel_right_rear_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="wheel_right_rear_joint">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="wheel_right_rear_actuator">
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
@@ -381,15 +384,17 @@ Stephen Brawner (brawner@gmail.com)
             rgba="0.79608 0.82353 0.93725 1" />
         </material>
       </visual>
-      <!-- <collision>
-  <origin
-  xyz="0 0 0"
-  rpy="0 0 0" />
-  <geometry>
-    <mesh
-    filename="package://mirte_master_description/meshes/cam_front.STL" />
-  </geometry>
-</collision> -->
+<!-- 
+      <collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://mirte_master_description/meshes/cam_front.STL" />
+        </geometry>
+      </collision>
+ -->
     </link>
     <joint
       name="cam_joint_front"
@@ -397,9 +402,9 @@ Stephen Brawner (brawner@gmail.com)
       <origin
         xyz="0 -0.1325 -0.0285"
         rpy="1.5708 0 0" />
-      <parent link="base_link" />
+      <parent link="frame_link" />
       <child link="cam_front" />
-      <!-- <axis xyz="0 0 0" /> -->
+      <axis xyz="0 0 0" />
     </joint>
   </xacro:if>
 
@@ -410,7 +415,7 @@ Stephen Brawner (brawner@gmail.com)
     <joint name="chassis_base_joint" type="fixed">
       <!-- Move the link so the rest will line up easier -->
       <!-- <origin xyz="0 0 -0.031" /> -->
-      <parent link="base_link" />
+      <parent link="frame_link" />
       <child link="link_chassis" />
     </joint>
 
@@ -494,7 +499,7 @@ Stephen Brawner (brawner@gmail.com)
         xyz="0 0.121521156261136 0.0540000000000046"
         rpy="1.5707963267949 0 -3.14159265358979" />
       <parent
-        link="base_link" />
+        link="frame_link" />
       <child
         link="screen" />
       <axis

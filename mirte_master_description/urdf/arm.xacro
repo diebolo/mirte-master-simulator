@@ -47,7 +47,7 @@
             xyz="0 -0.079274 0.06"
             rpy="1.5708 0 3.1416" />
         <parent
-            link="base_link" />
+            link="frame_link" />
         <child
             link="arm_Rot" />
         <axis

@@ -61,16 +61,26 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base_footprint:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        base_sonar_left_back:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
           Value: true
-        cam_front:
+        base_sonar_left_front:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_sonar_right_back:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_sonar_right_front:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -96,52 +106,40 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        lidar:
+        frame_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        screen:
+        lidar_base:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ultrasonic_bl:
+        lidar_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        link_chassis:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        wheel_left_front:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ultrasonic_br:
+        wheel_left_rear:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ultrasonic_fl:
+        wheel_right_front:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        ultrasonic_fr:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wheel_bl:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wheel_br:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wheel_fl:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wheel_fr:
+        wheel_right_rear:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -156,7 +154,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: base_footprint
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:

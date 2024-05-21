@@ -1,10 +1,9 @@
 <package format="2">
   <name>mirte_master_description</name>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <description>
     <p>URDF Description package for Mirte Master</p>
-    <p>This package contains configuration data, 3D models and launch files
-for Mirte Master robot</p>
+    <p>This package contains configuration data, 3D models and launch files for Mirte Master robot</p>
   </description>
   <author>Tyler Olson</author>
   <author>Jasper van Brakel</author>
@@ -18,10 +17,15 @@ for Mirte Master robot</p>
   <depend>joint_state_publisher_gui</depend>
   <depend>gazebo</depend>
   <depend>gazebo_ros</depend>
-  <depend>gazebo_mecanum_plugins</depend>
-  <depend>gazebo_sensor_collection</depend>
-  <exec_depend>mirte_master_velocity_limiter</exec_depend>  
-    <export>
+  <exec_depend>gazebo_sensor_collection</exec_depend>
+  <exec_depend>ridgeback_gazebo_plugins</exec_depend>
+  <exec_depend>ridgeback_control</exec_depend>
+  <exec_depend>hector_gazebo_plugins</exec_depend>
+  <exec_depend>mirte_gazebo</exec_depend>
+  <exec_depend>mirte_base_control</exec_depend>
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>gazebo_ros_control</exec_depend>
+  <export>
     <architecture_independent />
   </export>
 </package>

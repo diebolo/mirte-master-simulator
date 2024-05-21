@@ -47,7 +47,7 @@
       xyz="0 -0.1005 0.0072113248654052"
       rpy="-1.5707963267949 0 -1.5707963267949" />
     <parent
-      link="base_link" />
+      link="frame_link" />
     <child
       link="lidar_base" />
     <axis xyz="0 0 0" />

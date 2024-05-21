@@ -4,18 +4,9 @@
         <gazebo reference="wheel_${id}">
             <selfCollide>false</selfCollide>
             <gravity>true</gravity>
-            <mu1>0.0</mu1> <!--2.5-->
-            <mu2>0.0</mu2> <!--2.5-->
-            <!-- <kp>1e15</kp> --> <!-- <kp>1e2</kp> -->
-            <!-- <kd>1e13</kd> --> <!-- <kd>1e50</kd> -->
+            <mu1>0.0</mu1>
+            <mu2>0.0</mu2>
             <material>Gazebo/DarkGrey</material>
-        </gazebo>
-
-        <gazebo reference="wheel_joint_${id}">
-            <ode>
-                <implicit_spring_damper>true</implicit_spring_damper>
-            </ode>
-            <!-- < -->
         </gazebo>
     </xacro:macro>
 </robot>

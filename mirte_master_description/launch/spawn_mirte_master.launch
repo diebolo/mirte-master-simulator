@@ -6,11 +6,6 @@
   <arg name="z" default="0.1" />
   <arg name="yaw" default="0" />
 
-  <arg name="kinematic_only" default="False" />
-
-  <arg name="linear_velocity_limit" default="0.5" />
-  <arg name="angular_velocity_limit" default="0.5" />
-
   <arg name="flag_enable" default="False" />
   <arg name="arm_enable" default="False" />
   <arg name="screen_enable" default="False" />
@@ -18,6 +13,7 @@
   <arg name="sonar_enable" default="True" />
   <arg name="lidar_enable" default="True" />
   <arg name="depth_camera_enable" default="True" />
+  <arg name="imu_enable" default="True" />
 
   <include file="$(find mirte_master_description)/launch/description.launch">
     <arg name="flag_enable" value="$(arg flag_enable)" />
@@ -27,68 +23,29 @@
     <arg name="sonar_enable" value="$(arg sonar_enable)" />
     <arg name="lidar_enable" value="$(arg lidar_enable)" />
     <arg name="depth_camera_enable" value="$(arg depth_camera_enable)" />
-
-    <arg name="kinematic_only" value="$(arg kinematic_only)" />
+    <arg name="imu_enable" value="$(arg imu_enable)" />
   </include>
 
-
-  <group unless="$(arg kinematic_only)">
-    <rosparam param="/gazebo_ros_control/pid_gains">
-      wheel_joint_fr:
-        p: 1 # 1 # 10 # 1
-        i: 0 # 0.1 #0.5 #0.1
-        d: 0 # 0.0 #0.0 #0
-      wheel_joint_br:
-        p: 1 # 1 #10 # 1
-        i: 0 # 0.1 #0.5 #0.1
-        d: 0 # 0.0 #0.0 #0
-      wheel_joint_fl:
-        p: 1 # 1 #10 # 1
-        i: 0 # 0.1 #0.5 # 0.1
-        d: 0 # 0.0 #0.0 # 0
-      wheel_joint_bl:
-        p: 1 # 1 #10 # 1
-        i: 0 # 0.1 #0.5 # 0.1
-        d: 0 # 0.0 #0.0 # 0
-    </rosparam>
-  </group>
-
-  <!-- If simulating the main body only as kinematic, we use an derivative/damper to get some
-  physical limits back -->
-  <group if="$(arg kinematic_only)">
-    <rosparam param="/gazebo_ros_control/pid_gains">
-      wheel_joint_fr:
-        p: 1.0 # 1 # 10 # 1
-        i: 0.0 # 0.1 #0.5 #0.1
-        d: 0.2 # 0.0 #0.0 #0
-      wheel_joint_br:
-        p: 1.0 # 1 #10 # 1
-        i: 0.0 # 0.1 #0.5 #0.1
-        d: 0.2 # 0.0 #0.0 #0
-      wheel_joint_fl:
-        p: 1.0 # 1 #10 # 1
-        i: 0.0 # 0.1 #0.5 # 0.1
-        d: 0.2 # 0.0 #0.0 # 0
-      wheel_joint_bl:
-        p: 1.0 # 1 #10 # 1
-        i: 0.0 # 0.1 #0.5 # 0.1
-        d: 0.2 # 0.0 #0.0 # 0
-    </rosparam>
-  </group>
+  <rosparam param="/gazebo_ros_control/pid_gains" command="load"
+    file="$(find mirte_master_description)/config/ros_control_wheel_pid_gains.yaml" />
 
   <!-- Spawn Mirte Master -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
     args="-urdf -model $(arg name) -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)" />
 
-  <node name="sim_velocity_limiter" pkg="mirte_master_velocity_limiter" type="velocity_limiter_node">
-    <param name="~linear_limit" type="double" value="$(arg linear_velocity_limit)" />
-    <param name="~angular_limit" type="double" value="$(arg angular_velocity_limit)" />
-  </node>
+  <group>
+    <node name="mirte_base_node" output="screen"
+        pkg="mirte_base_control"
+        type="mirte_base_control_node"/>
 
-  <node pkg="gazebo_mecanum_plugins" type="gazebo_mecanum_plugin_pid" respawn="false"
-    name="gazebo_mecanum_plugin_pid" output="screen">
-    <rosparam file="$(find mirte_master_description)/param/pid_parameter.yaml" command="load" />
-  </node>
+     <rosparam command="load" file="$(find mirte_base_control)/config/control_master.yaml"/>
+     <node name="controller_spawner"
+        pkg="controller_manager"
+        type="spawner"
+        output="screen"
+        args="mobile_base_controller my_robot"/>
+
+ </group>
 
   <group if="$(arg sonar_enable)">
     <node pkg="mirte_gazebo" type="convert_sonar" name="map_sonar_left_front" args="left_front" />

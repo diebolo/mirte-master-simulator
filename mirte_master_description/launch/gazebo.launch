@@ -1,6 +1,7 @@
 <launch>
   <arg name="paused" default="False" />
   <arg name="gui" default="True" />
+  <arg name="world_name" default="$(find gazebo_ros)/worlds/empty_world.world" />
 
   <arg name="flag_enable" default="False" />
   <arg name="arm_enable" default="False" />
@@ -9,26 +10,14 @@
   <arg name="sonar_enable" default="True" />
   <arg name="lidar_enable" default="True" />
   <arg name="depth_camera_enable" default="True" />
-
-  <arg name="kinematic_only" default="False"/>
+  <arg name="imu_enable" default="True" />
 
   <include
     file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="paused" value="$(arg paused)" />
     <arg name="gui" value="$(arg gui)" />
-    <!-- <arg name="physics" value="bullet"/> -->
+    <arg name="world_name" value="$(arg world_name)" />
   </include>
-  <!-- <node
-    name="tf_footprint_base"
-    pkg="tf"
-    type="static_transform_publisher"
-    args="0 0 0 0 0 0 base_link base_footprint 40" /> -->
-
-  <!-- <node
-    name="fake_joint_calibration"
-    pkg="rostopic"
-    type="rostopic"
-    args="pub /calibrated std_msgs/Bool true" /> -->
 
   <include file="$(find mirte_master_description)/launch/spawn_mirte_master.launch">
     <arg name="flag_enable" value="$(arg flag_enable)" />
@@ -38,7 +27,6 @@
     <arg name="sonar_enable" value="$(arg sonar_enable)" />
     <arg name="lidar_enable" value="$(arg lidar_enable)" />
     <arg name="depth_camera_enable" value="$(arg depth_camera_enable)" />
-
-    <arg name="kinematic_only" value="$(arg kinematic_only)"/>
+    <arg name="imu_enable" value="$(arg imu_enable)" />
   </include>
 </launch>
