@@ -16,7 +16,6 @@ This packaged is structered as the [mirte-gazebo](https://github.com/ArendJan/mi
 ### What doesn't work yet:
 - The arm
 - The front camera (not supplied for MDP 2024)
-- IMU
 - Battery
 
 ### What does work
@@ -24,6 +23,7 @@ This packaged is structered as the [mirte-gazebo](https://github.com/ArendJan/mi
 - LiDAR
 - Depthcamera
 - Sonar
+- IMU
 
 ## Install
 Installing `catkintools` (provides `catkin build` as alternative to `catkin_make`) is helpful and recommended: (You may need to clean your workspace if you are migrating).
@@ -58,14 +58,10 @@ To finish the install do from the catkin workspace root:
 ```
 rosdep install --from-paths src --ignore-src -r -y
 # It will says astra_camera not found, which is fine
-catkin config --skiplist mirte_bringup
+catkin config --skiplist ridgeback_navigation ridgeback_description mirte_bringup
 catkin build # remove everything except the src folder
 ```
 <!-- rosdep install --from-paths src --ignore-packages-from-source --rosdistro noetic -y -->
-
-
-<!-- ## Setup notes -->
- <!-- - Use the patched version of [RidgeBack control](https://github.com/ArendJan/ridgeback/tree/melodic-devel) -->
 
 # Contributers
 - Jasper van Brakel (Integration) | Group 10
