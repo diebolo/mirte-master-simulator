@@ -2,6 +2,15 @@
 In short the driving has been greatly improved.
 There are however some breaking changes listed below.
 
+> **NOTICE**
+> If you are upgrading you need to run the following commands:
+> ```
+> git clone
+> git submodule upgrade --init
+> cd ../.. # Be in '**_ws/' root of workspace
+> rosdep install --from-paths src --ignore-src -r -y
+> ```
+
 ## Renamed frames
  - `base_link` -> `frame_link`
  - `base_footprint` -> `base_link`
