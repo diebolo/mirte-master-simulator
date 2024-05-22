@@ -26,7 +26,7 @@
         <robotNamespace>/mirte</robotNamespace>
         <updateRate>50.0</updateRate>
         <bodyName>imu_link</bodyName>
-        <topicName>imu/data</topicName>
+        <topicName>movement/imu</topicName>
         <frameId>base_link</frameId>
         <accelDrift>0.005 0.005 0.005</accelDrift>
         <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
