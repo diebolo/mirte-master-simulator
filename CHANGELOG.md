@@ -1,6 +1,3 @@
-# Version 1.1.0
-In short the driving has been greatly improved.
-There are however some breaking changes listed below.
 
 > **NOTICE**
 > If you are upgrading you need to run the following commands:
@@ -10,6 +7,19 @@ There are however some breaking changes listed below.
 > cd ../.. # Be in '**_ws/' root of workspace
 > rosdep install --from-paths src --ignore-src -r -y
 > ```
+
+# Version 1.2.0 (`mirte_master_description`)
+The package has been split into `mirte_master_description` and `mirte_master_gazebo`.
+`mirte_master_description` now only contains the robot description and only has depencies required for that (No RVIZ or gazebo) making it suitable for use on the Mirte Master itself. (You need to copy over a package form `gazebo_sensor_collection` as well, which has also been split)
+
+The package `mirte_master_gazebo` contains all the depencies for Gazebo and RVIZ, with the launch files previously found in `mirte_master_description`.
+
+Besure to follow the upgrade instructions above.
+
+# Version 1.1.0
+In short the driving has been greatly improved.
+There are however some breaking changes listed below.
+
 
 ## Renamed frames
  - `base_link` -> `frame_link`

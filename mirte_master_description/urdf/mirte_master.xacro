@@ -34,7 +34,7 @@ Stephen Brawner (brawner@gmail.com)
   <xacro:include filename="$(find mirte_master_description)/urdf/mirte_master_base.gazebo.xacro" />
 
   <xacro:include
-    filename="$(find gazebo_sensor_collection)/urdf/cameras/rgbd/orbbec_astra_pro_plus.urdf.xacro" />
+    filename="$(find gazebo_sensor_collection_description)/urdf/cameras/rgbd/orbbec_astra_pro_plus.urdf.xacro" />
 
   <xacro:if value="$(arg depth_camera_enable)">
     <xacro:sensor_orbbec_astra_pro_plus name="camera" parent="frame_link" color="black">

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>mirte_master_gazebo</name>
+  <version>0.1.0</version>
+  <description>The Gazebo simulator setup  fo the Mirte Master robot</description>
+
+  <author>Jasper van Brakel</author>
+  <maintainer email="J.C.vanBrakel@student.tudelft.nl">Jasper van Brakel</maintainer>
+  <license>BSD</license>
+
+  <!-- Url tags are optional, but multiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- Example: -->
+  <!-- <url type="website">http://wiki.ros.org/mirte_master_gazebo</url> -->
+
+  <!-- The *depend tags are used to specify dependencies -->
+  <!-- Dependencies can be catkin packages or system dependencies -->
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roslaunch</build_depend>
+  <depend>gazebo</depend>
+  <depend>gazebo_ros</depend>
+  <depend>gazebo_ros_control</depend>
+  <depend version_gte="1.1.0">mirte_master_description</depend>
+  
+  <!-- Visualizer dependencies -->
+  <depend>rviz</depend>
+  <depend>joint_state_publisher_gui</depend>  
+  
+  <!-- <build_depend>controller_manager</build_depend> -->
+  <build_export_depend>gazebo_sensor_collection_plugins</build_export_depend>
+  <build_export_depend>hector_gazebo_plugins</build_export_depend>
+  <build_export_depend>mirte_base_control</build_export_depend>
+  <build_export_depend>mirte_gazebo</build_export_depend>
+  <build_export_depend>ridgeback_gazebo_plugins</build_export_depend>
+  <!-- <build_depend>ridgeback_control</build_depend> -->
+  
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>gazebo_sensor_collection_plugins</exec_depend>
+  <exec_depend>hector_gazebo_plugins</exec_depend>
+  <exec_depend>mirte_base_control</exec_depend>
+  <exec_depend>mirte_gazebo</exec_depend>
+  <exec_depend>ridgeback_control</exec_depend>
+  <exec_depend>ridgeback_gazebo_plugins</exec_depend>
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+    <architecture_independent />
+  </export>
+</package>

@@ -27,7 +27,7 @@
   </include>
 
   <rosparam param="/gazebo_ros_control/pid_gains" command="load"
-    file="$(find mirte_master_description)/config/ros_control_wheel_pid_gains.yaml" />
+    file="$(find mirte_master_gazebo)/config/ros_control_wheel_pid_gains.yaml" />
 
   <!-- Spawn Mirte Master -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"

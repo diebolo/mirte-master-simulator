@@ -4,9 +4,9 @@
 This packaged is structered as the [mirte-gazebo](https://github.com/ArendJan/mirte-gazebo/tree/rsp) Repository.
 
 > **NOTES:**
-> Use `mirte_master_description` for the simulation by launching `gazebo.launch`
+> Use `mirte_master_gazebo` for the simulation by launching `gazebo.launch`
 > 
-> `roslaunch mirte_master_description spawn_mirte_master.launch` can be used to spawn a Mirte Master in any Gazebo world.
+> `roslaunch mirte_master_gazebo spawn_mirte_master.launch` can be used to spawn a Mirte Master in any Gazebo world.
 > (The current way of doing things only allows for 1 mirte due to naming collisions)
 
 
@@ -62,6 +62,12 @@ catkin config --skiplist ridgeback_navigation ridgeback_description mirte_bringu
 catkin build # remove everything except the src folder
 ```
 <!-- rosdep install --from-paths src --ignore-packages-from-source --rosdistro noetic -y -->
+
+## Install the `mirte_master_description` on the Mirte Master.
+**TODO**: But the packages you need to copy are:
+ - `mirte_master_description`
+ - `gazebo_sensor_collection_description`
+
 
 # Contributers
 - Jasper van Brakel (Integration) | Group 10
