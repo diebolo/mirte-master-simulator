@@ -50,7 +50,7 @@
   <group if="$(arg sonar_enable)">
     <node pkg="mirte_gazebo" type="convert_sonar" name="map_sonar_left_front" args="left_front" />
     <node pkg="mirte_gazebo" type="convert_sonar" name="map_sonar_right_front" args="right_front" />
-    <node pkg="mirte_gazebo" type="convert_sonar" name="map_sonar_left_back" args="left_back" />
-    <node pkg="mirte_gazebo" type="convert_sonar" name="map_sonar_right_back" args="right_back" />
+    <node pkg="mirte_gazebo" type="convert_sonar" name="map_sonar_left_rear" args="left_rear" />
+    <node pkg="mirte_gazebo" type="convert_sonar" name="map_sonar_right_rear" args="right_rear" />
   </group>
 </launch>

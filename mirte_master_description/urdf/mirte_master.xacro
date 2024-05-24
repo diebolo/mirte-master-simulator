@@ -433,14 +433,14 @@ Stephen Brawner (brawner@gmail.com)
         rpy="0 0 ${-pi/2-0.296705972839036}" />
     </xacro:ultrasonic_sensor>
 
-    <xacro:ultrasonic_sensor name="left_back">
+    <xacro:ultrasonic_sensor name="left_rear">
       <origin
         xyz="0.0565606470918482 0.119187021096338 -0.031"
         rpy="0 0 ${-pi/2 + 2.84488668075076}" />
     </xacro:ultrasonic_sensor>
 
 
-    <xacro:ultrasonic_sensor name="right_back">
+    <xacro:ultrasonic_sensor name="right_rear">
       <origin
         xyz="-0.0565606470918482 0.119187021096338 -0.031"
         rpy="0 0 ${-pi/2 -2.84488668075076}" />
