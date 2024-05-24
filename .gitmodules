@@ -3,7 +3,7 @@
 	url = git@github.com:SuperJappie08/gazebo_sensor_collection.git
 [submodule "mirte-gazebo"]
 	path = mirte-gazebo
-	url = git@github.com:ArendJan/mirte-gazebo.git
+	url = git@github.com:SuperJappie08/mirte-gazebo.git
 	branch = rsp
 [submodule "ridgeback"]
 	path = ridgeback
