@@ -1,0 +1,79 @@
+<launch>
+    <arg name="robot_1" default="mirte1" />
+    <arg name="robot_2" default="mirte2" />
+
+    <arg name="x1" default="0.5" />
+    <arg name="y1" default="0.5" />
+    <arg name="z1" default="0.1" />
+    <arg name="yaw1" default="0" />
+
+    <arg name="x2" default="-0.5" />
+    <arg name="y2" default="-0.5" />
+    <arg name="z2" default="0.1" />
+    <arg name="yaw2" default="0" />
+
+    <arg name="paused" default="False" />
+    <arg name="gui" default="True" />
+    <arg name="world_name" default="$(find gazebo_ros)/worlds/empty_world.world" />
+
+    <arg name="flag_enable" default="False" />
+    <arg name="arm_enable" default="False" />
+    <arg name="screen_enable" default="False" />
+    <arg name="front_camera_enable" default="False" />
+    <arg name="sonar_enable" default="True" />
+    <arg name="lidar_enable" default="True" />
+    <arg name="depth_camera_enable" default="True" />
+    <arg name="imu_enable" default="True" />
+
+    <include
+        file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="$(arg paused)" />
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="world_name" value="$(arg world_name)" />
+    </include>
+
+    <group ns="$(arg robot_1)">
+        <param name="tf_prefix" value="$(arg robot_1)" />
+        <include file="$(find mirte_master_gazebo)/launch/spawn_mirte_master.launch">
+            <arg name="use_namespace" value="True" />
+
+            <arg name="name" value="$(arg robot_1)" />
+            <arg name="x" value="$(arg x1)" />
+            <arg name="y" value="$(arg y1)" />
+            <arg name="z" value="$(arg z1)" />
+            <arg name="yaw" value="$(arg yaw1)" />
+
+            <arg name="flag_enable" value="$(arg flag_enable)" />
+            <arg name="arm_enable" value="$(arg arm_enable)" />
+            <arg name="screen_enable" value="$(arg screen_enable)" />
+            <arg name="front_camera_enable" value="$(arg front_camera_enable)" />
+            <arg name="sonar_enable" value="$(arg sonar_enable)" />
+            <arg name="lidar_enable" value="$(arg lidar_enable)" />
+            <arg name="depth_camera_enable" value="$(arg depth_camera_enable)" />
+            <arg name="imu_enable" value="$(arg imu_enable)" />
+        </include>
+    </group>
+
+
+    <group ns="$(arg robot_2)">
+        <param name="tf_prefix" value="$(arg robot_2)" />
+        <include file="$(find mirte_master_gazebo)/launch/spawn_mirte_master.launch">
+            <arg name="use_namespace" value="True" />
+
+            <arg name="name" value="$(arg robot_2)" />
+            <arg name="x" value="$(arg x2)" />
+            <arg name="y" value="$(arg y2)" />
+            <arg name="z" value="$(arg z2)" />
+            <arg name="yaw" value="$(arg yaw2)" />
+
+            <arg name="flag_enable" value="$(arg flag_enable)" />
+            <arg name="arm_enable" value="$(arg arm_enable)" />
+            <arg name="screen_enable" value="$(arg screen_enable)" />
+            <arg name="front_camera_enable" value="$(arg front_camera_enable)" />
+            <arg name="sonar_enable" value="$(arg sonar_enable)" />
+            <arg name="lidar_enable" value="$(arg lidar_enable)" />
+            <arg name="depth_camera_enable" value="$(arg depth_camera_enable)" />
+            <arg name="imu_enable" value="$(arg imu_enable)" />
+        </include>
+    </group>
+</launch>

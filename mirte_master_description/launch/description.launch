@@ -8,7 +8,18 @@
     <arg name="depth_camera_enable" default="True" />
     <arg name="imu_enable" default="True" />
 
-    <param name="robot_description"
-        command="$(find xacro)/xacro '$(find mirte_master_description)/urdf/mirte_master.xacro' flag_enable:=$(arg flag_enable) arm_enable:=$(arg arm_enable) screen_enable:=$(arg screen_enable) front_camera_enable:=$(arg front_camera_enable) sonar_enable:=$(arg sonar_enable) lidar_enable:=$(arg lidar_enable) depth_camera_enable:=$(arg depth_camera_enable) imu_enable:=$(arg imu_enable)" />
+    <arg name="use_namespace" default="False" />
+    <arg name="namespace" default="namespace" />
+
+    <group if="$(arg use_namespace)">
+        <param name="robot_description"
+            command="$(find xacro)/xacro '$(find mirte_master_description)/urdf/mirte_master.xacro' flag_enable:=$(arg flag_enable) arm_enable:=$(arg arm_enable) screen_enable:=$(arg screen_enable) front_camera_enable:=$(arg front_camera_enable) sonar_enable:=$(arg sonar_enable) lidar_enable:=$(arg lidar_enable) depth_camera_enable:=$(arg depth_camera_enable) imu_enable:=$(arg imu_enable) use_namespace:=True namespace_name:=$(arg namespace)" />
+    </group>
+    <group unless="$(arg use_namespace)">
+        <param name="robot_description"
+            command="$(find xacro)/xacro '$(find mirte_master_description)/urdf/mirte_master.xacro' flag_enable:=$(arg flag_enable) arm_enable:=$(arg arm_enable) screen_enable:=$(arg screen_enable) front_camera_enable:=$(arg front_camera_enable) sonar_enable:=$(arg sonar_enable) lidar_enable:=$(arg lidar_enable) depth_camera_enable:=$(arg depth_camera_enable) imu_enable:=$(arg imu_enable)" />
+    </group>
+
+
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 </launch>

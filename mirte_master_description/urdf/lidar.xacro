@@ -91,8 +91,8 @@
                 </noise>
             </ray>
             <plugin name="lidar" filename="libgazebo_ros_laser.so">
-                <topicName>/scan</topicName>
-                <frameName>lidar_link</frameName>
+                <topicName>scan</topicName>
+                <frameName>${tf_namespace}lidar_link</frameName>
             </plugin>
         </sensor>
     </gazebo>
