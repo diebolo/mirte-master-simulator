@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-    <link
-    name="lidar_base">
+  <link name="lidar_base">
     <inertial>
       <origin
         xyz="-3.97749846947626E-10 0.0118651639742243 -9.54386087724301E-05"
@@ -56,44 +55,66 @@
   <link name="lidar_link"></link>
 
   <joint name="lidar_joint" type="fixed">
-    <origin rpy="${radians(90)} ${radians(0)} 0"/>
-    <parent link="lidar_base"/>
-    <child link="lidar_link"/>
+    <origin rpy="${radians(90)} ${radians(0)} 0" />
+    <parent link="lidar_base" />
+    <child link="lidar_link" />
     <axis xyz="0 0 0" />
   </joint>
-    <gazebo reference="lidar_link">
-        <sensor type="ray" name="lidar">
-            <pose>0 0 0 0 0 0</pose>
-            <visualize>false</visualize>
-            <update_rate>10</update_rate>
-            <ray>
-                <scan>
-                    <horizontal>
-                        <samples>500</samples>
-                        <resolution>1</resolution>
-                        <min_angle>${-pi}</min_angle>
-                        <max_angle>${pi}</max_angle>
-                    </horizontal>
-                </scan>
-                <range>
-                    <min>0.05</min>
-                    <max>10.0</max> <!-- Could be anything between 10-12 depeding on conditions according to the spec sheet-->
-                    <resolution>0.015</resolution>
-                </range>
-                <noise>
-                    <type>gaussian</type>
-                    <!-- Noise parameters based on published spec for Hokuyo laser
+
+  <xacro:if value="$(arg use_correct_laser_frame)">
+    <link name="laser"></link>
+
+    <joint name="laser_joint" type="fixed">
+      <origin rpy="0 0 ${radians(90)}" />
+      <parent link="lidar_link" />
+      <child link="laser" />
+      <axis xyz="0 0 0" />
+    </joint>
+    <xacro:property name="lidar_sensor_link" value="laser" />
+  </xacro:if>
+  <xacro:unless value="$(arg use_correct_laser_frame)">
+    <xacro:property name="lidar_sensor_link" value="lidar_link" />
+  </xacro:unless>
+
+  <gazebo reference="${lidar_sensor_link}">
+    <sensor type="ray" name="lidar">
+      <xacro:if value="$(arg use_correct_laser_frame)">
+        <pose>0 0 0 0 0 0</pose>
+      </xacro:if>
+      <xacro:unless value="$(arg use_correct_laser_frame)">
+        <pose>0 0 0 0 0 0</pose>
+      </xacro:unless>
+      <visualize>false</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>500</samples>
+            <resolution>1</resolution>
+            <min_angle>${-pi}</min_angle>
+            <max_angle>${pi}</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.05</min>
+          <max>10.0</max> <!-- Could be anything between 10-12 depeding on conditions according to
+          the spec sheet-->
+          <resolution>0.015</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise parameters based on published spec for Hokuyo laser
                 achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
                 stddev of 0.01m will put 99.7% of samples within 0.03m of the true
                 reading. -->
-                    <mean>0.0</mean>
-                    <stddev>0.01</stddev>
-                </noise>
-            </ray>
-            <plugin name="lidar" filename="libgazebo_ros_laser.so">
-                <topicName>scan</topicName>
-                <frameName>lidar_link</frameName>
-            </plugin>
-        </sensor>
-    </gazebo>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="lidar" filename="libgazebo_ros_laser.so">
+        <topicName>scan</topicName>
+        <frameName>${lidar_sensor_link}</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
 </robot>

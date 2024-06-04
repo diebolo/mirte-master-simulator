@@ -12,6 +12,8 @@
   <arg name="depth_camera_enable" default="True" />
   <arg name="imu_enable" default="True" />
 
+  <arg name="use_correct_laser_frame" default="False"/>
+
   <include
     file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="paused" value="$(arg paused)" />
@@ -28,5 +30,7 @@
     <arg name="lidar_enable" value="$(arg lidar_enable)" />
     <arg name="depth_camera_enable" value="$(arg depth_camera_enable)" />
     <arg name="imu_enable" value="$(arg imu_enable)" />
+
+    <arg name="use_correct_laser_frame" value="$(arg use_correct_laser_frame)" />
   </include>
 </launch>

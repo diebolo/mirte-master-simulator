@@ -28,6 +28,8 @@ Stephen Brawner (brawner@gmail.com)
     <xacro:property name="tf_namespace" value="" scope="global" lazy_eval="False"/>
   </xacro:unless>
 
+  <xacro:arg name="use_correct_laser_frame" default="False" />
+
   <xacro:property name="wheel_radius" value="0.050" />
   <xacro:property name="wheel_length" value="0.055" />
   <xacro:property name="wheel_mass" value="2.15" /> <!-- 0.26661 -->

@@ -11,13 +11,17 @@
     <arg name="use_namespace" default="False" />
     <arg name="namespace" default="namespace" />
 
+    <!-- Add this as a default parameter to maintain compatibility-->
+    <arg name="use_correct_laser_frame" default="False"/>
+
+
     <group if="$(arg use_namespace)">
         <param name="robot_description"
-            command="$(find xacro)/xacro '$(find mirte_master_description)/urdf/mirte_master.xacro' flag_enable:=$(arg flag_enable) arm_enable:=$(arg arm_enable) screen_enable:=$(arg screen_enable) front_camera_enable:=$(arg front_camera_enable) sonar_enable:=$(arg sonar_enable) lidar_enable:=$(arg lidar_enable) depth_camera_enable:=$(arg depth_camera_enable) imu_enable:=$(arg imu_enable) use_namespace:=True namespace_name:=$(arg namespace)" />
+            command="$(find xacro)/xacro '$(find mirte_master_description)/urdf/mirte_master.xacro' flag_enable:=$(arg flag_enable) arm_enable:=$(arg arm_enable) screen_enable:=$(arg screen_enable) front_camera_enable:=$(arg front_camera_enable) sonar_enable:=$(arg sonar_enable) lidar_enable:=$(arg lidar_enable) depth_camera_enable:=$(arg depth_camera_enable) imu_enable:=$(arg imu_enable) use_namespace:=True namespace_name:=$(arg namespace) use_correct_laser_frame:=$(arg use_correct_laser_frame)" />
     </group>
     <group unless="$(arg use_namespace)">
         <param name="robot_description"
-            command="$(find xacro)/xacro '$(find mirte_master_description)/urdf/mirte_master.xacro' flag_enable:=$(arg flag_enable) arm_enable:=$(arg arm_enable) screen_enable:=$(arg screen_enable) front_camera_enable:=$(arg front_camera_enable) sonar_enable:=$(arg sonar_enable) lidar_enable:=$(arg lidar_enable) depth_camera_enable:=$(arg depth_camera_enable) imu_enable:=$(arg imu_enable)" />
+            command="$(find xacro)/xacro '$(find mirte_master_description)/urdf/mirte_master.xacro' flag_enable:=$(arg flag_enable) arm_enable:=$(arg arm_enable) screen_enable:=$(arg screen_enable) front_camera_enable:=$(arg front_camera_enable) sonar_enable:=$(arg sonar_enable) lidar_enable:=$(arg lidar_enable) depth_camera_enable:=$(arg depth_camera_enable) imu_enable:=$(arg imu_enable) use_correct_laser_frame:=$(arg use_correct_laser_frame)" />
     </group>
 
 
