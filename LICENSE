@@ -1,0 +1,2 @@
+This repository contains multiple ROS packages. The mirte-master-gazebo and mirte_master_description package are
+licensed under BSD-3-Clause, all other packages are submodules with a license in their respective repository.
